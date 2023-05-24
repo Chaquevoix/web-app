@@ -1,6 +1,7 @@
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebaseConfig';
+import { redirect } from "react-router-dom";
 
 function Login() {
 
@@ -10,6 +11,7 @@ function Login() {
                 // Signed in 
                 message.success("Login successful.")
                 const user = userCredential.user;
+                redirect("/account")
             })
             .catch((error) => {
                 if (error.code === "auth/user-not-found") {
