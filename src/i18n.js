@@ -19,6 +19,14 @@ const resources = {
                 bad_email: "This is not a valid email.",
                 submit: "Submit"
             },
+            register : {
+                form: {
+                    confirm_email_invalid: "The two emails you entered do not match.",
+                    confirm_password_invalid: "The two passwords you entered do not match.",
+                    err_weak_password: "The password you entered is too weak.",
+                    err_already_in_use: "The email you entered is already registered."
+                },
+            },
             user_not_logged_in: "You must be logged in to see this.",
             user_not_enough_permission: "You do not have the permission to view this.",
         }
