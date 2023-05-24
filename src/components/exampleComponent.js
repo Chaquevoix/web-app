@@ -3,6 +3,7 @@ import '../App.css';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConfig';
 import { useState, useEffect } from 'react';
+import { Spin } from 'antd';
 
 function ExampleComponent() {
 
@@ -27,7 +28,7 @@ function ExampleComponent() {
 
     return (
         <div>
-            {schools}
+            { loading ? <Spin/> : schools }
         </div>
     );
 }
