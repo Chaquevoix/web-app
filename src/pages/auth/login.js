@@ -2,24 +2,26 @@ import { Button, Checkbox, Form, Input, message } from 'antd';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function Login() {
+    const { t, i18n } = useTranslation();
 
     const onFinish = (values) => {
         signInWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // Signed in 
-                message.success("Login successful.")
+                message.success(t('login_success'))
                 const user = userCredential.user;
                 redirect("/account")
             })
             .catch((error) => {
                 if (error.code === "auth/user-not-found") {
-                    message.error("This account does not exist.")
+                    message.error(t('login_fail.no_user'))
                 }
 
                 if (error.code === "auth/wrong-password") {
-                    message.error("Wrong password.")
+                    message.error(t('login_fail.wrong_password'))
                 }
             });
     };
@@ -35,15 +37,15 @@ function Login() {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off">
 
-                <Form.Item label="Email" name="email"
+                <Form.Item label={t('form.email')} name="email"
                     rules={[
                         {
                             required: true,
-                            message: 'Email cannot be empty.',
+                            message: t('form.empty_required_field'),
                         },
                         {
                             type: "email",
-                            message: 'This is not a valid email.',
+                            message: t('form.bad_email'),
                         },
                     ]}>
 
@@ -51,11 +53,11 @@ function Login() {
 
                 </Form.Item>
 
-                <Form.Item label="Password" name="password"
+                <Form.Item label={t('form.password')} name="password"
                     rules={[
                         {
                             required: true,
-                            message: 'Password cannot be empty.',
+                            message: t('form.empty_required_field')
                         },
                     ]}>
 
@@ -66,7 +68,7 @@ function Login() {
                 <Form.Item>
 
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        {t('form.submit')}
                     </Button>
 
                 </Form.Item>
