@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import { Button, DatePicker, Form, Input, message } from 'antd';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
@@ -111,6 +111,42 @@ function Register() {
                     <Input.Password />
 
                 </Form.Item>
+
+                <Form.Item label={t('form.email')} name="permanent_code" hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: t('form.empty_required_field'),
+                        }
+                    ]}>
+
+                    <Input />
+
+                </Form.Item>
+
+                <Form.Item label={t('form.email')} name="admission_number" hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: t('form.empty_required_field'),
+                        }
+                    ]}>
+
+                    <Input />
+
+                </Form.Item>
+
+                <Form.Item label={t('form.email')} name="date_of_birth" hasFeedback
+                    rules={[
+                        {
+                            required: true,
+                            message: t('form.empty_required_field'),
+                        }
+                    ]}>
+
+                    <DatePicker format='YYYY/MM/DD' />
+
+                </Form.Item> 
 
                 <Form.Item>
 
