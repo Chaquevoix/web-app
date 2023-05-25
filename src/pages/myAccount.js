@@ -1,22 +1,24 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import { Button, Checkbox, Form, Input, Spin, message } from 'antd';
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from '../firebaseConfig';
-import { useState } from 'react';
+import { collection, doc, getDoc, getDocs, where, query, limit } from 'firebase/firestore';
+import { auth, db } from '../firebaseConfig';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function MyAccount() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [userAuthData, setUserAuthData] = useState()
     const [userData, setUserData] = useState()
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            setUserData(user);
-            // ...
+            setUserAuthData(user);
+            authUid = user.uid;
         } else {
-            setUserData(null)
+            setUserAuthData(null)
         }
     });
-
 
     const logOutButton = () => {
         signOut(auth).then(() => {
@@ -26,11 +28,36 @@ function MyAccount() {
         });
     }
 
-    if (userData != null) {
+    useEffect(() => {
+        const loadUserData = async () => {
+            if (authUid != "") {
+                setLoading(true);
+
+                const collUsers = collection(db, 'users')
+    
+                const dbQuery = query(collUsers, where('associated_user_account', "==", userAuthData.uid), limit(1));
+    
+                const querySnapshot = await getDocs(dbQuery);
+    
+                if (querySnapshot.empty) {
+                    return null;
+                }
+    
+                const document = querySnapshot.docs[0];
+                setUserData(document.data())
+                setLoading(false);
+            }
+        }
+
+        loadUserData()
+    });
+
+    if (userAuthData != null && userData != null) {
         return (
             <div>
-                <h1>Logged in as {userData.email}</h1>
+                <h1>Logged in as {userAuthData.email}</h1>
                 <Button type='primary' onClick={logOutButton}>Log Out</Button>
+                <h2>Hello, {userData.first_name}!</h2>
             </div>
         );
     } else {
@@ -40,8 +67,6 @@ function MyAccount() {
             </div>
         );
     }
-
-
 }
 
 export default MyAccount;
