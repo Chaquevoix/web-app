@@ -1,9 +1,11 @@
-import { Button, Checkbox, Form, Input, Spin, message } from 'antd';
+import { Button, message } from 'antd';
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, where, query, limit } from 'firebase/firestore';
+import { collection, getDocs, where, query, limit } from 'firebase/firestore';
 import { auth, db } from '../firebaseConfig';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+
+let authUid = ""
 
 function MyAccount() {
     const navigate = useNavigate();
@@ -34,23 +36,23 @@ function MyAccount() {
                 setLoading(true);
 
                 const collUsers = collection(db, 'users')
-    
-                const dbQuery = query(collUsers, where('associated_user_account', "==", userAuthData.uid), limit(1));
-    
+
+                const dbQuery = query(collUsers, where('associated_user_account', "==", authUid), limit(1));
+
                 const querySnapshot = await getDocs(dbQuery);
-    
+
                 if (querySnapshot.empty) {
                     return null;
                 }
-    
+
                 const document = querySnapshot.docs[0];
                 setUserData(document.data())
                 setLoading(false);
             }
         }
-
         loadUserData()
     });
+
 
     if (userAuthData != null && userData != null) {
         return (
@@ -60,6 +62,7 @@ function MyAccount() {
                 <h2>Hello, {userData.first_name}!</h2>
             </div>
         );
+        
     } else {
         return (
             <div>
