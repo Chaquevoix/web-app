@@ -1,20 +1,26 @@
-import { Button, Checkbox, Form, Input, message } from 'antd';
+import { Button, DatePicker, Form, Input, message } from 'antd';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../firebaseConfig';
+import { collection, query, where, limit, getDocs } from 'firebase/firestore';
+import { auth, db } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+    const [userAccountExists, setUserAccountExists] = useState(false)
 
     const onFinish = (values) => {
         console.log(values)
+
         createUserWithEmailAndPassword(auth, values.email, values.password)
             .then((userCredential) => {
                 // Signed in 
                 message.success(t('login_success'))
                 const user = userCredential.user;
-                redirect("/account")
+                navigate("/auth/link_user/")
             })
             .catch((error) => {
                 console.log(error.code)
@@ -26,6 +32,7 @@ function Register() {
                     message.error(t('register.form.err_already_in_use'))
                 }
             });
+
     };
 
     const onFinishFailed = (errorInfo) => {
