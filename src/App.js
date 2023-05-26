@@ -7,6 +7,7 @@ import Page1 from './pages/page1';
 import Login from './pages/auth/login';
 import MyAccount from './pages/myAccount';
 import Register from './pages/auth/register';
+import LinkUser from './pages/auth/linkUserToAccount';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
   {
     path: "/auth/register",
     element: <Register />,
+  },
+  ,
+  {
+    path: "auth/link_user",
+    element: <LinkUser />,
   },
   {
     path: "/account",
