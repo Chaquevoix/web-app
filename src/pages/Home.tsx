@@ -5,8 +5,8 @@ function Home() {
     return (
         <div className="App">
             <header className="App-header">
-                <a href='/auth/login'>login</a>
-                <a href='/auth/register'>register</a>
+                <a href='/login'>login</a>
+                <a href='/register'>register</a>
                 <a href='/account'>my account</a>
             </header>
         </div>
