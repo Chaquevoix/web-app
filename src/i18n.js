@@ -17,14 +17,16 @@ const resources = {
                 password: "Password",
                 empty_required_field: "This field cannot be empty.",
                 bad_email: "This is not a valid email.",
-                submit: "Submit"
+                submit: "Submit",
             },
             register : {
                 form: {
                     confirm_email_invalid: "The two emails you entered do not match.",
                     confirm_password_invalid: "The two passwords you entered do not match.",
                     err_weak_password: "The password you entered is too weak.",
-                    err_already_in_use: "The email you entered is already registered."
+                    err_already_in_use: "The email you entered is already registered.",
+                    permanent_code: "Permanent code",
+                    admission_number: "Admission number"
                 },
             },
             user_not_logged_in: "You must be logged in to see this.",
@@ -43,7 +45,7 @@ const resources = {
                 password: "Mot de passe",
                 empty_required_field: "Ce champ ne peut pas être vide.",
                 bad_email: "Ce courriel n'est pas valide.",
-                submit: "Envoyer"
+                submit: "Envoyer",
             },
             user_not_logged_in: "Vous devez être connecté pour faire ceci.",
             user_not_enough_permission: "Vous n'avez pas la permission de faire ceci.",
