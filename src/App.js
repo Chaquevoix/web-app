@@ -4,7 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './pages/Home';
-import Login from './pages/auth/login';
+import Login from './pages/auth/Login';
 import Account from './pages/Account';
 import Register from './pages/auth/Register';
 import LinkUser from './pages/auth/linkUserToAccount';
