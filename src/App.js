@@ -6,7 +6,7 @@ import {
 import Home from './pages/Home';
 import Login from './pages/auth/login';
 import Account from './pages/Account';
-import Register from './pages/auth/register';
+import Register from './pages/auth/Register';
 import LinkUser from './pages/auth/linkUserToAccount';
 
 const router = createBrowserRouter([

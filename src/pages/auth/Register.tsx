@@ -1,5 +1,6 @@
+import React from 'react';
 import { Button, DatePicker, Form, Input, message } from 'antd';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { collection, query, where, limit, getDocs } from 'firebase/firestore';
 import { auth, db } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
@@ -10,16 +11,20 @@ import { useNavigate } from "react-router-dom";
 function Register() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const [userAccountExists, setUserAccountExists] = useState(false)
 
-    const onFinish = (values) => {
-        console.log(values)
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-        createUserWithEmailAndPassword(auth, values.email, values.password)
+    const onFinish = (values: any) => {
+
+        createUserWithEmailAndPassword(values.email, values.password)
             .then((userCredential) => {
                 // Signed in 
                 message.success(t('login_success'))
-                const user = userCredential.user;
                 navigate("/auth/link_user/")
             })
             .catch((error) => {
@@ -35,7 +40,7 @@ function Register() {
 
     };
 
-    const onFinishFailed = (errorInfo) => {
+    const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
 
@@ -50,11 +55,11 @@ function Register() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field'),
+                            message: t('form.empty_required_field') + "",
                         },
                         {
                             type: "email",
-                            message: t('form.bad_email'),
+                            message: t('form.bad_email') + "",
                         },
                     ]}>
 
@@ -66,11 +71,11 @@ function Register() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field'),
+                            message: t('form.empty_required_field') + "",
                         },
                         {
                             type: "email",
-                            message: t('form.bad_email'),
+                            message: t('form.bad_email') + "",
                         },
                         ({ getFieldValue }) => ({
                             // validator taken from: https://github.com/ant-design/ant-design/blob/master/components/form/demo/register.tsx
@@ -78,7 +83,7 @@ function Register() {
                                 if (!value || getFieldValue('email') === value) {
                                     return Promise.resolve();
                                 }
-                                return Promise.reject(new Error(t('register.form.confirm_email_invalid')));
+                                return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
                             },
                         }),
                     ]}>
@@ -91,7 +96,7 @@ function Register() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field')
+                            message: t('form.empty_required_field') + ""
                         },
                     ]}>
 
@@ -103,14 +108,14 @@ function Register() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field')
+                            message: t('form.empty_required_field') + ""
                         },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue('password') === value) {
                                     return Promise.resolve();
                                 }
-                                return Promise.reject(new Error(t('register.form.confirm_email_invalid')));
+                                return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
                             },
                         }),
                     ]}>
