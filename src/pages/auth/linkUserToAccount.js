@@ -61,48 +61,56 @@ function LinkUser() {
         console.log('Failed:', errorInfo);
     };
 
-    return (
-        <div>
-            <Form
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off">
+    if (userAuthData != null) {
+        return (
+            <div>
+                <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off">
 
 
-                <Form.Item label={t('register.form.permanent_code')} name="permanent_code" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field'),
-                        }
-                    ]}>
+                    <Form.Item label={t('register.form.permanent_code')} name="permanent_code" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field'),
+                            }
+                        ]}>
 
-                    <Input />
+                        <Input />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item label={t('register.form.admission_number')} name="admission_number" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field'),
-                        }
-                    ]}>
+                    <Form.Item label={t('register.form.admission_number')} name="admission_number" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field'),
+                            }
+                        ]}>
 
-                    <Input />
+                        <Input />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item>
+                    <Form.Item>
 
-                    <Button type="primary" htmlType="submit">
-                        {t('form.submit')}
-                    </Button>
+                        <Button type="primary" htmlType="submit">
+                            {t('form.submit')}
+                        </Button>
 
-                </Form.Item>
-            </Form>
-        </div>
-    );
+                    </Form.Item>
+                </Form>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <h1>You cannot see this content.</h1>
+            </div>
+        );
+    }
 }
 
 export default LinkUser;
