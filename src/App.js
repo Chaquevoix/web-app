@@ -3,7 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Page1 from './pages/page1';
+import Home from './pages/Home';
 import Login from './pages/auth/login';
 import MyAccount from './pages/myAccount';
 import Register from './pages/auth/register';
@@ -12,7 +12,7 @@ import LinkUser from './pages/auth/linkUserToAccount';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Page1 />
+    element: <Home />
   },
   {
     path: "/auth/login",
