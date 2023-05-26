@@ -1,22 +1,13 @@
+import React from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../firebaseConfig';
-import { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
 
-function MyAccount() {
+function Account() {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState()
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUserData(user);
-            // ...
-        } else {
-            setUserData(null)
-        }
-    });
-
+    const [user, loading, error] = useAuthState(auth);
 
     const logOutButton = () => {
         signOut(auth).then(() => {
@@ -26,10 +17,10 @@ function MyAccount() {
         });
     }
 
-    if (userData != null) {
+    if (user != null) {
         return (
             <div>
-                <h1>Logged in as {userData.email}</h1>
+                <h1>Logged in as {user.email}</h1>
                 <Button type='primary' onClick={logOutButton}>Log Out</Button>
             </div>
         );
@@ -44,4 +35,4 @@ function MyAccount() {
 
 }
 
-export default MyAccount;
+export default Account;
