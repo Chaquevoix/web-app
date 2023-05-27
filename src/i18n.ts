@@ -36,10 +36,10 @@ const resources = {
                         confirm_password_invalid: "The two passwords you entered do not match.",
                         err_weak_password: "The password you entered is too weak.",
                         err_already_in_use: "The email you entered is already registered.",
-                        
                     },
                 },
                 link_user: {
+                    form_title: "Complete registration",
                     permanent_code: "Permanent code",
                     admission_number: "Admission number"
                 },
@@ -78,9 +78,12 @@ const resources = {
                         confirm_password_invalid: "Les mots de passe ne sont pas identiques.",
                         err_weak_password: "Le mot de passe choisi est trop faible.",
                         err_already_in_use: "Un compte existe déjà avec cette adresse courriel.",
-                        permanent_code: "Code permanent",
-                        admission_number: "# Demande d'admission"
                     },
+                },
+                link_user: {
+                    form_title: "Compléter l'inscription",
+                    permanent_code: "Code permanent",
+                    admission_number: "# Demande d'admission"
                 },
             },
         }
