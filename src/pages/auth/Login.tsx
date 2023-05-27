@@ -49,7 +49,7 @@ function Login() {
 
     return (
         <div>
-            <CenteredFormCard title='Login'>
+            <CenteredFormCard title={t('pages.login.form_title')}>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}

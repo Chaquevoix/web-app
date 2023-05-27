@@ -33,7 +33,7 @@ function Account() {
   if (!user) {
     return (
       <div>
-        <h1>You must be logged in to see this.</h1>
+        <h1>{t('global.user_not_logged_in')}</h1>
       </div>
     );
   }

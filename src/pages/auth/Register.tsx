@@ -53,7 +53,7 @@ function Register() {
 
     return (
         <div>
-            <CenteredFormCard title='Register'>
+            <CenteredFormCard title={t('pages.register.form_title')}>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}

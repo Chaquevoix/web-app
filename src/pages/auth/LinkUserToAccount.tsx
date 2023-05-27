@@ -75,7 +75,7 @@ function LinkUser() {
 
     return (
         <div>
-            <CenteredFormCard title='Complete registration'>
+            <CenteredFormCard title={t('pages.link_user.form_title')}>
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
