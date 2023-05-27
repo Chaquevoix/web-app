@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "overrides": {
-    "typescript" : "^5.0.4"
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.4.3",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "typescript-plugin-css-modules": "^5.0.1"
   }
 }
