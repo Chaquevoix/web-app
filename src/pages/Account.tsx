@@ -12,7 +12,7 @@ function Account() {
   const logOutButton = () => {
     signOut(auth)
       .then(() => {
-        navigate("/auth/login/");
+        navigate("/login");
       })
       .catch((error) => {
         message.error("An error has occured." + error);

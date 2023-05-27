@@ -25,7 +25,7 @@ function Register() {
             .then((userCredential) => {
                 // Signed in 
                 message.success(t('login_success'))
-                navigate("/auth/link_user/")
+                navigate("/link_user/")
             })
             .catch((error) => {
                 console.log(error.code)

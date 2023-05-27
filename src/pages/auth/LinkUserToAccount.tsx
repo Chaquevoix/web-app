@@ -23,7 +23,7 @@ function LinkUser() {
   const [userAuthData, loading, error] = useAuthState(auth);
 
   if (userAuthData == undefined || userAuthData == null) {
-    navigate("/auth/register");
+    navigate("/register");
   }
 
   const onFinish = (values: any) => {
