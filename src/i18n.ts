@@ -36,9 +36,12 @@ const resources = {
                         confirm_password_invalid: "The two passwords you entered do not match.",
                         err_weak_password: "The password you entered is too weak.",
                         err_already_in_use: "The email you entered is already registered.",
-                        permanent_code: "Permanent code",
-                        admission_number: "Admission number"
+                        
                     },
+                },
+                link_user: {
+                    permanent_code: "Permanent code",
+                    admission_number: "Admission number"
                 },
             },
         }

@@ -23,38 +23,33 @@ function LinkUser() {
 
     const [userAuthData, loading, error] = useAuthState(auth);
 
-    if (userAuthData == undefined || userAuthData == null) {
-        navigate("/register");
-    }
-
     const onFinish = (values: any) => {
+
         // Checks if the user data has been created by the school (name, etc)
         const verifyIfUserShouldExist = async () => {
             const collUsers = collection(db, "users");
 
+            // TODO: where() condition that checks if the user has no account already linked
             const dbQuery = query(
                 collUsers,
                 where("permanent_code", "==", values.permanent_code),
-                where("code", "==", values.admission_number),
+                where("admission_code", "==", values.admission_number),
                 limit(1)
             );
-            // TODO: where() condition that checks if the user has no account already linked
 
             const querySnapshot = await getDocs(dbQuery);
 
-            try {
-                if (querySnapshot.docs[0].data() != undefined) {
-                    let info = querySnapshot.docs[0].data();
+            if (querySnapshot.docs[0]) {
+                let info = querySnapshot.docs[0].data();
 
-                    await updateDoc(doc(db, "users", querySnapshot.docs[0].id), {
-                        associated_user_account: userAuthData?.uid,
-                    });
+                await updateDoc(doc(db, "users", querySnapshot.docs[0].id), {
+                    associated_user_account: userAuthData?.uid,
+                });
 
-                    message.success(`Welcome, ${info.first_name}`);
-                    navigate("/account/");
-                }
-            } catch (e) {
-                console.log(e);
+                message.success(`Welcome, ${info.first_name}`);
+                navigate("/account/");
+            }
+            else {
                 message.error(
                     "The user information you entered is incorrect or does not exist."
                 );
@@ -68,10 +63,12 @@ function LinkUser() {
         console.log("Failed:", errorInfo);
     };
 
-    if (!userAuthData) {
+    if (!userAuthData && !loading) {
+
+        navigate("/register");
         return (
             <div>
-                <h1>You cannot see this content.</h1>
+                <h1>{t('global.user_not_enough_permission')}</h1>
             </div>
         );
     }
@@ -85,13 +82,13 @@ function LinkUser() {
                     autoComplete="off"
                 >
                     <Form.Item
-                        label={t("register.form.permanent_code")}
+                        label={t("pages.link_user.permanent_code")}
                         name="permanent_code"
                         hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t("form.empty_required_field") + "",
+                                message: t("global.form.empty_required_field") + "",
                             },
                         ]}
                     >
@@ -99,13 +96,13 @@ function LinkUser() {
                     </Form.Item>
 
                     <Form.Item
-                        label={t("register.form.admission_number")}
+                        label={t("pages.link_user.admission_number")}
                         name="admission_number"
                         hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t("form.empty_required_field") + "",
+                                message: t("global.form.empty_required_field") + "",
                             },
                         ]}
                     >
@@ -114,7 +111,7 @@ function LinkUser() {
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
-                            {t("form.submit")}
+                            {t("global.form.submit")}
                         </Button>
                     </Form.Item>
                 </Form>
