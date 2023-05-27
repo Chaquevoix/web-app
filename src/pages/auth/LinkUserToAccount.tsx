@@ -1,5 +1,7 @@
+import React from 'react';
 import { Button, DatePicker, Form, Input, message } from 'antd';
 import { onAuthStateChanged } from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, query, where, limit, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { auth, db } from '../../firebaseConfig';
 import { useTranslation } from 'react-i18next';
@@ -7,22 +9,16 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function LinkUser() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
-    const [userAccountExists, setUserAccountExists] = useState(false)
 
-    const [userAuthData, setUserAuthData] = useState()
-    const [userData, setUserData] = useState()
+    const [userAuthData, loading, error] = useAuthState(auth);
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUserAuthData(user);
-        } else {
-            navigate("/auth/register/")
-        }
-    });
+    if (userAuthData == undefined || userAuthData == null) {
+        navigate('/auth/register')
+    }
 
-    const onFinish = (values) => {
+    const onFinish = (values: any) => {
 
         // Checks if the user data has been created by the school (name, etc)
         const verifyIfUserShouldExist = async () => {
@@ -42,7 +38,7 @@ function LinkUser() {
                     let info = querySnapshot.docs[0].data();
 
                     await updateDoc(doc(db, "users", querySnapshot.docs[0].id), {
-                        associated_user_account: userAuthData.uid
+                        associated_user_account: userAuthData?.uid
                     });
 
                     message.success(`Welcome, ${info.first_name}`)
@@ -57,7 +53,7 @@ function LinkUser() {
         verifyIfUserShouldExist()
     };
 
-    const onFinishFailed = (errorInfo) => {
+    const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
 
@@ -74,7 +70,7 @@ function LinkUser() {
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field'),
+                                message: t('form.empty_required_field') + "",
                             }
                         ]}>
 
@@ -86,7 +82,7 @@ function LinkUser() {
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field'),
+                                message: t('form.empty_required_field') + "",
                             }
                         ]}>
 

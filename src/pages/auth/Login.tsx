@@ -1,19 +1,28 @@
+import React from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
-    const onFinish = (values) => {
-        signInWithEmailAndPassword(auth, values.email, values.password)
+    const onFinish = (values: any) => {
+        signInWithEmailAndPassword(values.email, values.password)
             .then((userCredential) => {
                 // Signed in 
                 message.success(t('login_success'))
-                const user = userCredential.user;
-                redirect("/account")
+                navigate("/account")
             })
             .catch((error) => {
                 if (error.code === "auth/user-not-found") {
@@ -26,7 +35,9 @@ function Login() {
             });
     };
 
-    const onFinishFailed = (errorInfo) => {
+
+
+    const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
 
@@ -41,11 +52,11 @@ function Login() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field'),
+                            message: t('form.empty_required_field') + "",
                         },
                         {
                             type: "email",
-                            message: t('form.bad_email'),
+                            message: t('form.bad_email') + "",
                         },
                     ]}>
 
@@ -57,7 +68,7 @@ function Login() {
                     rules={[
                         {
                             required: true,
-                            message: t('form.empty_required_field')
+                            message: t('form.empty_required_field') + ""
                         },
                     ]}>
 
