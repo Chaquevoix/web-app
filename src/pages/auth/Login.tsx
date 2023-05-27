@@ -5,11 +5,12 @@ import { auth } from '../../firebaseConfig';
 import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
+import CenteredFormCard from '../../components/CenteredFormCard';
 
 function Login() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    
+
     const [
         signInWithEmailAndPassword,
         user,
@@ -43,47 +44,49 @@ function Login() {
 
     return (
         <div>
-            <Form
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off">
+            <CenteredFormCard title='Login'>
+                <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off">
 
-                <Form.Item label={t('form.email')} name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + "",
-                        },
-                        {
-                            type: "email",
-                            message: t('form.bad_email') + "",
-                        },
-                    ]}>
+                    <Form.Item label={t('form.email')} name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + "",
+                            },
+                            {
+                                type: "email",
+                                message: t('form.bad_email') + "",
+                            },
+                        ]}>
 
-                    <Input />
+                        <Input />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item label={t('form.password')} name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + ""
-                        },
-                    ]}>
+                    <Form.Item label={t('form.password')} name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + ""
+                            },
+                        ]}>
 
-                    <Input.Password />
+                        <Input.Password />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item>
+                    <Form.Item>
 
-                    <Button type="primary" htmlType="submit">
-                        {t('form.submit')}
-                    </Button>
+                        <Button type="primary" htmlType="submit">
+                            {t('form.submit')}
+                        </Button>
 
-                </Form.Item>
-            </Form>
+                    </Form.Item>
+                </Form>
+            </CenteredFormCard>
         </div>
     );
 }

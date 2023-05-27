@@ -7,6 +7,7 @@ import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import CenteredFormCard from '../../components/CenteredFormCard';
 
 function Register() {
     const { t, i18n } = useTranslation();
@@ -46,92 +47,94 @@ function Register() {
 
     return (
         <div>
-            <Form
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off">
+            <CenteredFormCard title='Register'>
+                <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off">
 
-                <Form.Item label={t('form.email')} name="email" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + "",
-                        },
-                        {
-                            type: "email",
-                            message: t('form.bad_email') + "",
-                        },
-                    ]}>
-
-                    <Input />
-
-                </Form.Item>
-
-                <Form.Item label={t('form.email')} name="confirm_email" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + "",
-                        },
-                        {
-                            type: "email",
-                            message: t('form.bad_email') + "",
-                        },
-                        ({ getFieldValue }) => ({
-                            // validator taken from: https://github.com/ant-design/ant-design/blob/master/components/form/demo/register.tsx
-                            validator(_, value) {
-                                if (!value || getFieldValue('email') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
+                    <Form.Item label={t('form.email')} name="email" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + "",
                             },
-                        }),
-                    ]}>
-
-                    <Input />
-
-                </Form.Item>
-
-                <Form.Item label={t('form.password')} name="password" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + ""
-                        },
-                    ]}>
-
-                    <Input.Password />
-
-                </Form.Item>
-
-                <Form.Item label={t('form.password')} name="confirm_password" hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: t('form.empty_required_field') + ""
-                        },
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-                                return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
+                            {
+                                type: "email",
+                                message: t('form.bad_email') + "",
                             },
-                        }),
-                    ]}>
+                        ]}>
 
-                    <Input.Password />
+                        <Input />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item>
+                    <Form.Item label={t('form.email')} name="confirm_email" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + "",
+                            },
+                            {
+                                type: "email",
+                                message: t('form.bad_email') + "",
+                            },
+                            ({ getFieldValue }) => ({
+                                // validator taken from: https://github.com/ant-design/ant-design/blob/master/components/form/demo/register.tsx
+                                validator(_, value) {
+                                    if (!value || getFieldValue('email') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
+                                },
+                            }),
+                        ]}>
 
-                    <Button type="primary" htmlType="submit">
-                        {t('form.submit')}
-                    </Button>
+                        <Input />
 
-                </Form.Item>
-            </Form>
+                    </Form.Item>
+
+                    <Form.Item label={t('form.password')} name="password" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + ""
+                            },
+                        ]}>
+
+                        <Input.Password />
+
+                    </Form.Item>
+
+                    <Form.Item label={t('form.password')} name="confirm_password" hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: t('form.empty_required_field') + ""
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
+                                },
+                            }),
+                        ]}>
+
+                        <Input.Password />
+
+                    </Form.Item>
+
+                    <Form.Item>
+
+                        <Button type="primary" htmlType="submit">
+                            {t('form.submit')}
+                        </Button>
+
+                    </Form.Item>
+                </Form>
+            </CenteredFormCard>
         </div>
     );
 }
