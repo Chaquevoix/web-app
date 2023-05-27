@@ -21,29 +21,35 @@ function Register() {
     ] = useCreateUserWithEmailAndPassword(auth);
 
     const onFinish = (values: any) => {
-
-        createUserWithEmailAndPassword(values.email, values.password)
-            .then((userCredential) => {
-                // Signed in 
-                message.success(t('login_success'))
-                navigate("/link_user/")
-            })
-            .catch((error) => {
-                console.log(error.code)
-                if (error.code === "auth/weak-password") {
-                    message.error(t('register.form.err_weak_password'))
-                }
-
-                if (error.code === "auth/email-already-in-use") {
-                    message.error(t('register.form.err_already_in_use'))
-                }
-            });
-
+        createUserWithEmailAndPassword(values.email, values.password);
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    if (error) {
+        switch (error.code) {
+            case "auth/weak-password":
+                message.error(t('pages.register.form.err_weak_password'))
+                break;
+
+            case "auth/email-already-in-use":
+                message.error(t('pages.register.form.err_already_in_use'))
+                break;
+
+            default:
+                message.error(t('global.generic_error') + error.message)
+                break;
+        }
+    }
+
+    if (user) {
+        message.success(t('pages.register.register_success'))
+        navigate("/link_user")
+    }
+
+    
 
     return (
         <div>
@@ -53,15 +59,15 @@ function Register() {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off">
 
-                    <Form.Item label={t('form.email')} name="email" hasFeedback
+                    <Form.Item label={t('global.form.email')} name="email" hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + "",
+                                message: t('global.form.empty_required_field') + "",
                             },
                             {
                                 type: "email",
-                                message: t('form.bad_email') + "",
+                                message: t('global.form.bad_email') + "",
                             },
                         ]}>
 
@@ -69,15 +75,15 @@ function Register() {
 
                     </Form.Item>
 
-                    <Form.Item label={t('form.email')} name="confirm_email" hasFeedback
+                    <Form.Item label={t('global.form.email')} name="confirm_email" hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + "",
+                                message: t('global.form.empty_required_field') + "",
                             },
                             {
                                 type: "email",
-                                message: t('form.bad_email') + "",
+                                message: t('global.form.bad_email') + "",
                             },
                             ({ getFieldValue }) => ({
                                 // validator taken from: https://github.com/ant-design/ant-design/blob/master/components/form/demo/register.tsx
@@ -94,11 +100,11 @@ function Register() {
 
                     </Form.Item>
 
-                    <Form.Item label={t('form.password')} name="password" hasFeedback
+                    <Form.Item label={t('global.form.password')} name="password" hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + ""
+                                message: t('global.form.empty_required_field') + ""
                             },
                         ]}>
 
@@ -106,18 +112,18 @@ function Register() {
 
                     </Form.Item>
 
-                    <Form.Item label={t('form.password')} name="confirm_password" hasFeedback
+                    <Form.Item label={t('global.form.password')} name="confirm_password" hasFeedback
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + ""
+                                message: t('global.form.empty_required_field') + ""
                             },
                             ({ getFieldValue }) => ({
                                 validator(_, value) {
                                     if (!value || getFieldValue('password') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error(t('register.form.confirm_email_invalid') + ""));
+                                    return Promise.reject(new Error(t('pages.register.form.confirm_email_invalid') + ""));
                                 },
                             }),
                         ]}>
@@ -129,7 +135,7 @@ function Register() {
                     <Form.Item>
 
                         <Button type="primary" htmlType="submit">
-                            {t('form.submit')}
+                            {t('global.form.submit')}
                         </Button>
 
                     </Form.Item>

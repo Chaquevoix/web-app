@@ -19,28 +19,33 @@ function Login() {
     ] = useSignInWithEmailAndPassword(auth);
 
     const onFinish = (values: any) => {
-        signInWithEmailAndPassword(values.email, values.password)
-            .then((userCredential) => {
-                // Signed in 
-                message.success(t('login_success'))
-                navigate("/account")
-            })
-            .catch((error) => {
-                if (error.code === "auth/user-not-found") {
-                    message.error(t('login_fail.no_user'))
-                }
-
-                if (error.code === "auth/wrong-password") {
-                    message.error(t('login_fail.wrong_password'))
-                }
-            });
+        signInWithEmailAndPassword(values.email, values.password);
     };
-
-
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    if (user) {
+        message.success(t('pages.login.login_success'))
+        navigate("/account")
+    }
+
+    if (error) {
+        switch (error.code) {
+            case "auth/user-not-found":
+                message.error(t('pages.login.login_fail.no_user'));
+                break;
+
+            case "auth/wrong-password":
+                message.error(t('pages.login.login_fail.wrong_password'));
+                break;
+
+            default:
+                message.error(t('global.generic_error') + error.message)
+                break;
+        }
+    }
 
     return (
         <div>
@@ -50,15 +55,15 @@ function Login() {
                     onFinishFailed={onFinishFailed}
                     autoComplete="off">
 
-                    <Form.Item label={t('form.email')} name="email"
+                    <Form.Item label={t('global.form.email')} name="email"
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + "",
+                                message: t('global.form.empty_required_field') + "",
                             },
                             {
                                 type: "email",
-                                message: t('form.bad_email') + "",
+                                message: t('global.form.bad_email') + "",
                             },
                         ]}>
 
@@ -66,11 +71,11 @@ function Login() {
 
                     </Form.Item>
 
-                    <Form.Item label={t('form.password')} name="password"
+                    <Form.Item label={t('global.form.password')} name="password"
                         rules={[
                             {
                                 required: true,
-                                message: t('form.empty_required_field') + ""
+                                message: t('global.form.empty_required_field') + ""
                             },
                         ]}>
 
@@ -81,7 +86,7 @@ function Login() {
                     <Form.Item>
 
                         <Button type="primary" htmlType="submit">
-                            {t('form.submit')}
+                            {t('global.form.submit')}
                         </Button>
 
                     </Form.Item>
