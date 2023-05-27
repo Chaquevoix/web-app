@@ -43,6 +43,9 @@ const resources = {
                     permanent_code: "Permanent code",
                     admission_number: "Admission number"
                 },
+                account: {
+                    logged_in_as: "Logged in as "
+                },
             },
         }
     },
@@ -84,6 +87,9 @@ const resources = {
                     form_title: "Compléter l'inscription",
                     permanent_code: "Code permanent",
                     admission_number: "# Demande d'admission"
+                },
+                account: {
+                    logged_in_as: "Connecté en tant que "
                 },
             },
         }
