@@ -3,6 +3,8 @@
     top: 50%;
     left: 50%;
     margin: 0 auto;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     border-radius: 15px;
     border: none;
     box-shadow:
@@ -15,19 +17,15 @@
 }
 
 /* === Desktop === */
-@media only screen and (min-width: 575px) {
+@media only screen and (min-width: 574px) {
     .card_body {
         width: 500px;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
     }
 }
 
 /* === Mobile === */
-@media only screen and (max-width: 574px) {
+@media only screen and (max-width: 575px) {
     .card_body {
         width: 90vw;
-        -ms-transform: translate(-50%, -80%);
-        transform: translate(-50%, -80%);
     }
 }
