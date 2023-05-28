@@ -18,6 +18,19 @@ function App() {
     setIsDarkMode((previousValue) => !previousValue);
     document.cookie = `ManuallySetLightMode=${isDarkMode}`
   };
+
+  useEffect(() => {
+    let themeCookie = document.cookie.split("; ").find((row) => row.startsWith("ManuallySetLightMode="))?.split("=")[1];
+
+    if (themeCookie === "false") {
+      setIsDarkMode(true)
+    } 
+    
+    if (themeCookie === "true") {
+      setIsDarkMode(false)
+    }
+  });
+
   return (
     <ConfigProvider
       theme={{
