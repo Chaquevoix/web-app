@@ -77,12 +77,12 @@ function Account() {
   // content
   return (
     <div>
-      <h1>{t('pages.account.logged_in_as')} {authUserData.email}</h1>
+      <h1>{t('pages.account.logged_in_as', {email: authUserData.email})}</h1>
       <Button type="primary" onClick={logOutButton}>
         Log Out
       </Button>
       <div>
-        <h1>Welcome back, {document.first_name}!</h1>
+        <h1>{t('pages.account.welcome_back', { name: document.first_name })}</h1>
       </div>
     </div>
   );
