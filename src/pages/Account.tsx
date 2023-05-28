@@ -42,7 +42,7 @@ function Account() {
   }
 
   // validation
-  if (authLoading && dbLoading) {
+  if (authLoading || dbLoading) {
     return (
       <div>
         <h1>Loading...</h1>
@@ -58,7 +58,7 @@ function Account() {
     );
   }
 
-  if (!dbValues || !dbSnapshot?.docs[0]) {
+  if (!dbSnapshot?.docs[0] && !dbLoading) {
     return (
       <div>
         <h1>{t('pages.account.no_profile_linked')}</h1>
