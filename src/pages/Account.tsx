@@ -1,14 +1,28 @@
 import React from "react";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { collection, query, where, getDocs, limit } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 function Account() {
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+  const [authUserData, authLoading, authError] = useAuthState(auth);
+
+  const [dbValues, dbLoading, dbError, dbSnapshot] = useCollectionDataOnce<any>(
+    query(
+      collection(db, 'users'),
+      where(
+        'associated_user_account',
+        "==",
+        authUserData ? authUserData.uid : "no_user_found"),
+      limit(1)
+    )
+  );
+
   const { t } = useTranslation();
 
   const logOutButton = () => {
