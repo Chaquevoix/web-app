@@ -62,6 +62,9 @@ function Account() {
     return (
       <div>
         <h1>{t('pages.account.no_profile_linked')}</h1>
+        <Button type="primary" onClick={logOutButton}>
+          Log Out
+        </Button>
         <Button type="default" onClick={handleNavigateToLinkUser}>
           Link user
         </Button>
