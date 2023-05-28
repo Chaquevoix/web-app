@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 
 function Account() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function Account() {
   };
 
   // validation
-  if (loading) {
+  if (authLoading && dbLoading) {
     return (
       <div>
         <h1>Loading...</h1>
@@ -44,7 +45,7 @@ function Account() {
     );
   }
 
-  if (!user) {
+  if (!authUserData) {
     return (
       <div>
         <h1>{t('global.user_not_logged_in')}</h1>
@@ -52,13 +53,29 @@ function Account() {
     );
   }
 
+  if (!dbValues || !dbSnapshot?.docs[0]) {
+    return (
+      <div>
+        <h1>{t('pages.account.no_profile_linked')}</h1>
+        <Button type="primary" onClick={logOutButton}>
+          Log Out
+        </Button>
+      </div>
+    );
+  }
+
+  const document = dbSnapshot?.docs[0].data();
+
   // content
   return (
     <div>
-      <h1>{t('pages.account.logged_in_as')} {user.email}</h1>
+      <h1>{t('pages.account.logged_in_as')} {authUserData.email}</h1>
       <Button type="primary" onClick={logOutButton}>
         Log Out
       </Button>
+      <div>
+        <h1>Welcome back, {document.first_name}!</h1>
+      </div>
     </div>
   );
 }
