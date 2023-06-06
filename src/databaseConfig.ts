@@ -29,5 +29,3 @@ export const auth = getAuth(firebase);
 
 
 export const supabase = createClient("https://bqjhuqhzmxhplftvtibn.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxamh1cWh6bXhocGxmdHZ0aWJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODYwMjYzOTcsImV4cCI6MjAwMTYwMjM5N30.IhV3nqZFlhDxJTWincaz3XlYlIra8HRZ-QPfrC8Vd4g");
-
-export const supabaseAuth = supabase.auth;
