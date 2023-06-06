@@ -121,8 +121,8 @@ function LinkUser() {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            {t("global.form.submit")}
+                        <Button type="primary" htmlType="submit" disabled={dbLoading}>
+                            {t("global.form.submit")} {dbLoading ? <Spin/> : ""}
                         </Button>
                     </Form.Item>
                 </Form>
