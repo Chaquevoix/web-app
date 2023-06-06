@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
-import { auth, db } from "../firebaseConfig";
+import { auth, db } from "../databaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 import { useNavigate } from "react-router-dom";
@@ -27,13 +27,14 @@ function Account() {
   const { t } = useTranslation();
 
   const logOutButton = () => {
-    signOut(auth)
-      .then(() => {
-        navigate("/login");
-      })
-      .catch((error) => {
-        message.error(t('global.generic_error') + error);
-      });
+    // signOut(auth)
+    //   .then(() => {
+    //     navigate("/login");
+    //   })
+    //   .catch((error) => {
+    //     message.error(t('global.generic_error') + error);
+    //   });
+    auth.signOut()
   };
 
   const handleNavigateToLinkUser = () => {

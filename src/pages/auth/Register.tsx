@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, DatePicker, Form, Input, message } from 'antd';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { collection, query, where, limit, getDocs } from 'firebase/firestore';
-import { auth, db } from '../../firebaseConfig';
+import { auth, db } from '../../databaseConfig';
 import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';

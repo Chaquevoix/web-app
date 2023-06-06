@@ -11,7 +11,7 @@ import {
     updateDoc,
     doc,
 } from "firebase/firestore";
-import { auth, db } from "../../firebaseConfig";
+import { auth, db } from "../../databaseConfig";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
