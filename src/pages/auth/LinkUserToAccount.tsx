@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, DatePicker, Form, Input, message } from "antd";
+import { Button, DatePicker, Form, Input, Spin, message } from "antd";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
@@ -11,7 +11,7 @@ import {
     updateDoc,
     doc,
 } from "firebase/firestore";
-import { auth, db } from "../../databaseConfig";
+import { auth, db, supabase } from "../../databaseConfig";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,37 +22,48 @@ function LinkUser() {
     const navigate = useNavigate();
 
     const [userAuthData, loading, error] = useAuthState(auth);
+    const [dbLoading, setDbLoading] = useState<boolean>(false)
 
     const onFinish = (values: any) => {
 
         // Checks if the user data has been created by the school (name, etc)
         const verifyIfUserShouldExist = async () => {
-            const collUsers = collection(db, "users");
 
-            // TODO: where() condition that checks if the user has no account already linked
-            const dbQuery = query(
-                collUsers,
-                where("permanent_code", "==", values.permanent_code),
-                where("admission_code", "==", values.admission_number),
-                limit(1)
-            );
+            if (userAuthData) {
+                setDbLoading(true)
 
-            const querySnapshot = await getDocs(dbQuery);
+                const { data, error } = await supabase
+                    .from('user-profile')
+                    .update({ associated_user_account: userAuthData.uid })
+                    .is('associated_user_account', null)
+                    .eq('permanent_code', values.permanent_code)
+                    .eq('admission_code', values.admission_number)
+                    .select()
 
-            if (querySnapshot.docs[0]) {
-                let info = querySnapshot.docs[0].data();
+                if (error) {
+                    setDbLoading(false)
 
-                await updateDoc(doc(db, "users", querySnapshot.docs[0].id), {
-                    associated_user_account: userAuthData?.uid,
-                });
+                    if (error.code === "23505") {
+                        message.error("An account has already been registered with this information.");
+                    }
 
-                message.success(`Welcome, ${info.first_name}`);
-                navigate("/account/");
-            }
-            else {
-                message.error(
-                    "The user information you entered is incorrect or does not exist."
-                );
+                } else {
+
+                    if (data?.length === 1) {
+                        message.success(`Welcome, ${data[0].first_name}`);
+                        navigate("/account/");
+                    }
+
+                    if (data?.length === 0) {
+                        setDbLoading(false)
+
+                        message.error("The information you entered has not been found");
+                    }
+
+                }
+
+            } else {
+                navigate("/register/");
             }
         };
 
