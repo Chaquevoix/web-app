@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebaseConfig';
+import { auth } from '../../databaseConfig';
 import { redirect } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";

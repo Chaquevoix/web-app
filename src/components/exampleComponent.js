@@ -1,7 +1,7 @@
 import '../App.css';
 
 import { doc, getDoc } from "firebase/firestore";
-import { db } from '../firebaseConfig';
+import { db } from '../databaseConfig';
 import { useState, useEffect } from 'react';
 import { Spin } from 'antd';
 
