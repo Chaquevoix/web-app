@@ -7,6 +7,7 @@ import Register from './pages/auth/Register';
 import LinkUser from './pages/auth/LinkUserToAccount';
 import { useState, useEffect } from 'react';
 import { ConfigProvider, theme, Switch, Layout } from "antd";
+import Agenda from './pages/agenda/Agenda';
 
 function App() {
   // Dark theme taken and modified from https://betterprogramming.pub/how-to-toggle-dark-theme-with-ant-design-5-0-eb68552f62b8
@@ -52,6 +53,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/link_user" element={<LinkUser />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/agenda" element={<Agenda />} />
           </Routes>
         </BrowserRouter>
       </Layout>

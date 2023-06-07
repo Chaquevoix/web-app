@@ -11,6 +11,7 @@ function Home() {
                 <a onClick={()=>navigate("/login")}>login</a>
                 <a onClick={()=>navigate("/register")}>register</a>
                 <a onClick={()=>navigate("/account")}>my account</a>
+                <a onClick={()=>navigate("/agenda")}>agenda</a>
             </header>
         </div>
     );
