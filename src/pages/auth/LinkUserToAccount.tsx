@@ -33,7 +33,7 @@ function LinkUser() {
                 setDbLoading(true)
 
                 const { data, error } = await supabase
-                    .from('user-profile')
+                    .from('user_profile')
                     .update({ associated_user_account: userAuthData.uid })
                     .is('associated_user_account', null)
                     .eq('permanent_code', values.permanent_code)

@@ -22,7 +22,7 @@ function Account() {
   async function getUserDataFromAssociatedUserAccount() {
     setDbValues("loading")
 
-    let { data, error } = await supabase.from('user-profile').select().eq('associated_user_account', authUserData ? authUserData.uid : "no_user_found")
+    let { data, error } = await supabase.from('user_profile').select().eq('associated_user_account', authUserData ? authUserData.uid : "no_user_found")
 
     if (data?.length === 1) {
       setDbValues(data[0]);
