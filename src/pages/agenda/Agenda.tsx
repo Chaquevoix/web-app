@@ -89,14 +89,12 @@ function Agenda() {
         <div>
             <div>
                 {
-                    groupData?.map(({ group_id, assessment_title, grade_value, course_code, course_name }: any) => {
+                    groupData?.map(({ group_number, course_code, course_name }: any) => {
                         return (
                             <AgendaGroupCard
                                 course_code={course_code}
                                 course_name={course_name}
-                                group_id={group_id}
-                                assessment_title={assessment_title}
-                                grade_value={grade_value}
+                                group_number={group_number}
                             />
                         )
                     })}
