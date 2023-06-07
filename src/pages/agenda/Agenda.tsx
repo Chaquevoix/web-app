@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import AgendaGroupCard from "../../components/AgendaGroupCard";
 
 function Agenda() {
     const navigate = useNavigate();
@@ -88,13 +89,15 @@ function Agenda() {
         <div>
             <div>
                 {
-                    groupData?.map(({ group_id, assessment_title, grade_value }: any) => {
+                    groupData?.map(({ group_id, assessment_title, grade_value, course_code, course_name }: any) => {
                         return (
-                            <div>
-                                <h1>numero groupe: {group_id}</h1>
-                                <h2>nom travail/examen: {assessment_title}</h2>
-                                <h3>note: {grade_value}</h3>
-                            </div>
+                            <AgendaGroupCard
+                                course_code={course_code}
+                                course_name={course_name}
+                                group_id={group_id}
+                                assessment_title={assessment_title}
+                                grade_value={grade_value}
+                            />
                         )
                     })}
             </div>
