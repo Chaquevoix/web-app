@@ -44,8 +44,9 @@ const resources = {
                     admission_number: "Admission number"
                 },
                 account: {
-                    logged_in_as: "Logged in as ",
-                    no_profile_linked: "Your account does not have a user profile."
+                    logged_in_as: "Logged in as {{email}}",
+                    no_profile_linked: "Your account does not have a user profile.",
+                    welcome_back: "Welcome back, {{name}}!"
                 },
             },
         }
@@ -90,8 +91,9 @@ const resources = {
                     admission_number: "# Demande d'admission"
                 },
                 account: {
-                    logged_in_as: "Connecté en tant que ",
-                    no_profile_linked: "Votre compte ne possède pas de profil utilisateur."
+                    logged_in_as: "Connecté en tant que {{email}}",
+                    no_profile_linked: "Votre compte ne possède pas de profil utilisateur.",
+                    welcome_back: "Bonjour, {{name}}!"
                 },
             },
         }
