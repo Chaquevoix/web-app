@@ -8,13 +8,13 @@ import { useEffect, useState } from "react";
 
 function Agenda() {
     const navigate = useNavigate();
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [userProfileDbValues, setUserProfileDbValues] = useState<any>();
+    const [groupData, setGroupData] = useState<any>();
     const [authUserData, authLoading, authError] = useAuthState(auth);
 
     useEffect(() => {
         getUserDataFromAssociatedUserAccount();
-
     }, [authUserData]);
 
     async function getUserDataFromAssociatedUserAccount() {
@@ -33,10 +33,13 @@ function Agenda() {
     }
 
     async function getGroupData(user_id: string) {
-
+        setGroupData("loading")
         const { data, error } = await supabase.rpc('get_group_data', { user_profile_id: user_id })
-
-        console.log(data, error)
+        if (data.length > 0) {
+            setGroupData(data);
+        } else {
+            setGroupData("no-data")
+        }
     }
 
     const handleNavigateToLinkUser = () => {
@@ -45,7 +48,7 @@ function Agenda() {
     }
 
     // validation
-    if (authLoading || userProfileDbValues === "loading") {
+    if (authLoading || userProfileDbValues === "loading" || groupData === "loading") {
         return (
             <div>
                 <h1>Loading...</h1>
@@ -72,13 +75,28 @@ function Agenda() {
         );
     }
 
+    if (groupData === "no-data") {
+        return (
+            <div>
+                <h1>No data found</h1>
+            </div>
+        );
+    }
+
     // content
     return (
         <div>
-            <h1>{t('pages.account.logged_in_as', { email: authUserData?.email })}</h1>
-
             <div>
-                <h1>{t('pages.account.welcome_back', { name: userProfileDbValues?.first_name })}!</h1>
+                {
+                    groupData?.map(({ group_id, assessment_title, grade_value }: any) => {
+                        return (
+                            <div>
+                                <h1>numero groupe: {group_id}</h1>
+                                <h2>nom travail/examen: {assessment_title}</h2>
+                                <h3>note: {grade_value}</h3>
+                            </div>
+                        )
+                    })}
             </div>
         </div>
     );
