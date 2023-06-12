@@ -5,6 +5,7 @@ import Login from './pages/auth/Login';
 import Account from './pages/Account';
 import Register from './pages/auth/Register';
 import LinkUser from './pages/auth/LinkUserToAccount';
+import AgendaGroup from './pages/agenda/Group'
 import { useState, useEffect } from 'react';
 import { ConfigProvider, theme, Switch, Layout } from "antd";
 import Agenda from './pages/agenda/Agenda';
@@ -54,6 +55,7 @@ function App() {
             <Route path="/link_user" element={<LinkUser />} />
             <Route path="/account" element={<Account />} />
             <Route path="/agenda" element={<Agenda />} />
+            <Route path="/agenda/group/:group_id" element={<AgendaGroup />} />
           </Routes>
         </BrowserRouter>
       </Layout>

@@ -38,6 +38,7 @@ function Agenda() {
         const { data, error } = await supabase.rpc('get_group_data', { user_profile_id: user_id })
         if (data.length > 0) {
             setGroupData(data);
+            console.log(data)
         } else {
             setGroupData("no-data")
         }
@@ -89,10 +90,11 @@ function Agenda() {
         <div>
             <div>
                 {
-                    groupData?.map(({ group_number, course_code, course_name }: any) => {
+                    groupData?.map(({ group_number, group_id, course_code, course_name }: any) => {
                         return (
                             <AgendaGroupCard
                                 course_code={course_code}
+                                group_id={group_id}
                                 course_name={course_name}
                                 group_number={group_number}
                             />
