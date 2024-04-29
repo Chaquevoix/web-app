@@ -1,10 +1,9 @@
 "use client";
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -22,7 +21,7 @@ import Link from "next/link";
 import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
