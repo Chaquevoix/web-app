@@ -67,6 +67,11 @@
       --ring: 212.7 26.8% 83.9%;
     }
 
+    main {
+        min-height: calc(100vh - var(--header-bar-heigth));
+        min-width: 100vw;
+    }
+
     .button_icon {
       font-size: 150%;
       margin-bottom: -2px;

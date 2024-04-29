@@ -17,6 +17,7 @@ export default function HeaderBar() {
         <header className={styles.header}>
             <Link href={'/'}>Chaquevoix</Link>
             <Link href={'/auth/register'}>Register</Link>
+            <Link href={'/auth/login'}>Login</Link>
 
             <NavigationMenu>
                 <NavigationMenuList>
