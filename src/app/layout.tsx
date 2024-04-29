@@ -17,9 +17,11 @@ export default function RootLayout({children,}: Readonly<{
 }>) {
     return (
         <html lang="en">
-        <HeaderBar/>
-        <Toaster position="top-center" richColors />
-        <body className={inter.className} style={{"marginTop": "var(--header-bar-heigth)"}}>{children}</body>
+            <Toaster position="top-center" richColors />
+            <body className={inter.className} style={{"marginTop": "var(--header-bar-heigth)"}}>
+                <HeaderBar/>
+                {children}
+            </body>
         </html>
     );
 }
