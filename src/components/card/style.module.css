@@ -1,0 +1,10 @@
+.card {
+    width: 450px;
+}
+
+@media only screen and (max-width: calc(450px + 10vw)) {
+    .card {
+        width: 90vw;
+        max-width: 90vw;
+    }
+}

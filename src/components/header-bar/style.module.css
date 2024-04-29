@@ -1,0 +1,8 @@
+.header {
+    height: var(--header-bar-heigth);
+    background: lightgray;
+    position: fixed;
+    top: 0;
+    display: inline-flex;
+    width: 100vw;
+}
