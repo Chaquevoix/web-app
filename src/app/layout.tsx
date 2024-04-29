@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import React from "react";
 import HeaderBar from "@/components/header-bar/header-bar";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -17,6 +18,7 @@ export default function RootLayout({children,}: Readonly<{
     return (
         <html lang="en">
         <HeaderBar/>
+        <Toaster position="top-center" richColors />
         <body className={inter.className} style={{"marginTop": "var(--header-bar-heigth)"}}>{children}</body>
         </html>
     );

@@ -15,13 +15,14 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import styles from "./style.module.css";
 import {Separator} from "@/components/ui/separator"
-import React from "react";
+import React, {useState} from "react";
 import {MdNavigateNext} from "react-icons/md";
 import Link from "next/link";
 import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
@@ -42,19 +43,29 @@ export function EmailPasswordForm() {
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
     })
+    const [isLoading, setIsLoading] = useState(false);
 
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/email`, {
+        setIsLoading(true);
+        const result = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/email`, {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({email: values.email, password: values.passwordConfirmation})
-        })
-            .then(response => {
-                if (response.status == 200) {
-                    router.push("/auth/check-email");
-                }
-            })
-            .catch(err => console.error(err));
+        }).catch(err => console.error(err));
+
+        toast.promise(result, {
+            loading: 'Loading...',
+            success: (data) => {
+                setIsLoading(false);
+
+                router.push("/auth/check-email");
+                return `Account created successfully!`;
+            },
+            error: (data) => {
+                setIsLoading(false);
+                return `Account creation error. Make sure your email is not already registered.`;
+            },
+        });
     }
 
     return (
@@ -99,7 +110,7 @@ export function EmailPasswordForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isLoading}>Submit</Button>
             </form>
         </Form>
     );
@@ -114,6 +125,7 @@ export function PasskeyForm() {
     const form = useForm<z.infer<typeof passkeysFormSchema>>({
         resolver: zodResolver(passkeysFormSchema),
     })
+    const [isLoading, setIsLoading] = useState(false);
 
     function onSubmit(values: z.infer<typeof passkeysFormSchema>) {
         // fetch(`${process.env.API_URL}/auth/account/register/email`, {

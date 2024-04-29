@@ -15,13 +15,14 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import styles from "./style.module.css";
 import {Separator} from "@/components/ui/separator"
-import React from "react";
+import React, {useState} from "react";
 import {MdNavigateNext} from "react-icons/md";
 import Link from "next/link";
 import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
@@ -33,19 +34,30 @@ export function EmailPasswordForm() {
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
     })
+    const [isLoading, setIsLoading] = useState(false);
 
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
+        setIsLoading(true);
+
+        const result = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({email: values.email, password: values.password})
-        })
-            .then(response => {
-                if (response.status == 200) {
-                    router.push("/auth/check-email");
-                }
-            })
-            .catch(err => console.error(err));
+        }).catch(err => console.error(err));
+
+        toast.promise(result, {
+            loading: 'Loading...',
+            success: (data) => {
+                setIsLoading(false);
+
+                router.push("/profile");
+                return `Welcome back!`;
+            },
+            error: (data) => {
+                setIsLoading(false);
+                return `Authentication error, make sure your credentials are correct.`;
+            },
+        });
     }
 
     return (
@@ -77,7 +89,7 @@ export function EmailPasswordForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isLoading}>Submit</Button>
             </form>
         </Form>
     );
