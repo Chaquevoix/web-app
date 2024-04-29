@@ -15,7 +15,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import styles from "./style.module.css";
 import {Separator} from "@/components/ui/separator"
-import React from "react";
+import React, {useState} from "react";
 import {MdNavigateNext} from "react-icons/md";
 import Link from "next/link";
 import {z} from "zod"
@@ -33,16 +33,22 @@ export function LinkAccountForm() {
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
     })
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
+        setIsLoading(true);
+
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/link`, {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({permanentCode: values.permanentCode, admissionCode: values.admissionCode})
         })
             .then(response => {
+                setIsLoading(false);
+
                 if (response.status == 200) {
-                    router.push("/auth/check-email");
+                    router.push("/profile");
                 }
             })
             .catch(err => console.error(err));
@@ -77,7 +83,7 @@ export function LinkAccountForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isLoading}>Submit</Button>
             </form>
         </Form>
     );
