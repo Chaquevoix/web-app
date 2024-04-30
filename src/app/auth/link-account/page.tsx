@@ -22,6 +22,7 @@ import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
+import IconButton from "@/components/icon-button/icon-button";
 
 const emailPasswordFormSchema = z.object({
     permanentCode: z.string().length(12, "The permanent code has a length of 12 characters."),
@@ -109,7 +110,7 @@ export default function LinkAccount() {
                         </div>
                         <div className={styles.form_row}>
                             <Link href={"/auth/check-email"}>
-                                <Button>Next <MdNavigateNext className={"button_icon"}/></Button>
+                                <IconButton text={"Next"} icon={<MdNavigateNext/>} iconPlacement={"right"}/>
                             </Link>
                         </div>
                     </CardContent>
