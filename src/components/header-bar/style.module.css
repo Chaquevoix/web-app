@@ -6,3 +6,9 @@
     display: inline-flex;
     width: 100vw;
 }
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background: #3d3d3d;
+    }
+}
