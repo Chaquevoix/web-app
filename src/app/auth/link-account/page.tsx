@@ -28,7 +28,7 @@ const emailPasswordFormSchema = z.object({
     admissionCode: z.string().length(7, "The admission code has a length of 7 characters."),
 });
 
-export function LinkAccountForm() {
+function LinkAccountForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
@@ -89,11 +89,12 @@ export function LinkAccountForm() {
     );
 }
 
-export default function Register() {
+export default function LinkAccount() {
     return (
         <main className={styles.page}>
             <div className={styles.card}>
-                <CardComponent title={"Link your account"} description={"To use Chaquevoix, you need to link your account to your existing profile information."}>
+                <CardComponent title={"Link your account"}
+                               description={"To use Chaquevoix, you need to link your account to your existing profile information."}>
                     <CardContent>
                         <LinkAccountForm/>
                     </CardContent>

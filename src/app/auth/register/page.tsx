@@ -38,7 +38,7 @@ const emailPasswordFormSchema = z.object({
     }
 });
 
-export function EmailPasswordForm() {
+function EmailPasswordForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
@@ -121,7 +121,7 @@ const passkeysFormSchema = z.object({
     email: z.string().email(),
 });
 
-export function PasskeyForm() {
+function PasskeyForm() {
     const form = useForm<z.infer<typeof passkeysFormSchema>>({
         resolver: zodResolver(passkeysFormSchema),
     })

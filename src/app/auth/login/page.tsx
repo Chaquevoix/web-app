@@ -29,7 +29,7 @@ const emailPasswordFormSchema = z.object({
     password: z.string().min(8, "You need at least 8 characters in your password"),
 });
 
-export function EmailPasswordForm() {
+function EmailPasswordForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
@@ -100,7 +100,7 @@ const passkeysFormSchema = z.object({
     email: z.string().email(),
 });
 
-export function PasskeyForm() {
+function PasskeyForm() {
     const form = useForm<z.infer<typeof passkeysFormSchema>>({
         resolver: zodResolver(passkeysFormSchema),
     })
@@ -117,7 +117,7 @@ export function PasskeyForm() {
     }
 }
 
-export default function Register() {
+export default function Login() {
     return (
         <main className={styles.page}>
             <div className={styles.card}>
