@@ -24,7 +24,6 @@ import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
-import CoolBackground from "@/components/cool-background/cool-background";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
