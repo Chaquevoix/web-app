@@ -32,7 +32,7 @@
       --input: 214.3 31.8% 91.4%;
       --ring: 222.2 84% 4.9%;
 
-      --radius: 0.5rem;
+      --radius: 8px;
 
       --header-bar-heigth: 50px;
     }
@@ -54,10 +54,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 222.2 20% 4.9%;
+    --background: 0 0% 3%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 0 0% 6%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
