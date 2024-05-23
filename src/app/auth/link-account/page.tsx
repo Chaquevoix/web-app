@@ -79,7 +79,7 @@ function LinkAccountForm() {
                             <FormLabel>Admission code</FormLabel>
                             <FormMessage/>
                             <FormControl>
-                                <Input id="admissionCode" type={"password"} placeholder="1234567"  {...field} />
+                                <Input id="admissionCode" placeholder="1234567"  {...field} />
                             </FormControl>
                         </FormItem>
                     )}
