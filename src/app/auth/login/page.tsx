@@ -120,7 +120,7 @@ function PasskeyForm() {
 
 export default function Login() {
     return (
-        <main className={styles.page}>
+        <main className={`${styles.page} cool_background`}>
             <div className={styles.card}>
                 <CardComponent title={"Email and password"} description={""}>
                     <CardContent>

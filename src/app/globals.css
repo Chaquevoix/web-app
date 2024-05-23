@@ -41,6 +41,13 @@
         min-height: calc(100vh - var(--header-bar-heigth));
         min-width: 100vw;
     }
+
+    .cool_background {
+        background-image:
+            radial-gradient(hsl(var(--background)) 1.5px, transparent 0),
+            radial-gradient(#fce8eb, transparent);
+        background-size: 0.7rem 0.7rem, 100vw 100vh;
+    }
   }
 
   @layer base {
@@ -81,5 +88,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+  }
+
+  .cool_background {
+      background-image:
+          radial-gradient(hsl(var(--background)) 1.5px, transparent 0),
+          radial-gradient(#2b0000, transparent);
+      background-size: 0.7rem 0.7rem, 100vw 100vh;
   }
 }

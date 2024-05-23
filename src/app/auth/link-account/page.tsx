@@ -92,7 +92,7 @@ function LinkAccountForm() {
 
 export default function LinkAccount() {
     return (
-        <main className={styles.page}>
+        <main className={`${styles.page} cool_background`}>
             <div className={styles.card}>
                 <CardComponent title={"Link your account"}
                                description={"To use Chaquevoix, you need to link your account to your existing profile information."}>
