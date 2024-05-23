@@ -99,21 +99,6 @@ export default function LinkAccount() {
                     <CardContent>
                         <LinkAccountForm/>
                     </CardContent>
-                    <Separator/>
-                    <CardHeader>
-                        <CardTitle>Passkeys</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className={styles.form_row}>
-                            <Label htmlFor="email">Email</Label>
-                            <Input id="email" type={"email"} placeholder="bob@courriel.com"/>
-                        </div>
-                        <div className={styles.form_row}>
-                            <Link href={"/auth/check-email"}>
-                                <IconButton text={"Next"} icon={<MdNavigateNext/>} iconPlacement={"right"}/>
-                            </Link>
-                        </div>
-                    </CardContent>
                 </CardComponent>
             </div>
         </main>
