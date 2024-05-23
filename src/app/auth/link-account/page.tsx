@@ -90,6 +90,9 @@ function LinkAccountForm() {
     );
 }
 
+// TODO: Only allow this page if the user has confirmed their account (has a session token)
+// TODO: Send session token in headers when sending the request to link the account
+
 export default function LinkAccount() {
     return (
         <main className={`${styles.page} cool_background`}>
