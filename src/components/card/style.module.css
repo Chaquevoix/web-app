@@ -1,6 +1,7 @@
 .card {
     width: 450px;
     margin-block: 5vw;
+    border-radius: calc(var(--radius) + 16px);
 }
 
 @media only screen and (max-width: calc(450px + 10vw)) {
