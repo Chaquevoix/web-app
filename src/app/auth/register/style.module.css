@@ -11,4 +11,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-image:
+        radial-gradient(hsl(var(--background)) 1px, transparent 0),
+        radial-gradient(#2b0000, transparent);
+    background-size: 0.7rem 0.7rem, 100vw 100vh;
 }
