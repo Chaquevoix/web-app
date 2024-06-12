@@ -4,6 +4,7 @@ import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,10 +25,12 @@ import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, "You need at least 8 characters in your password"),
+    rememberMe: z.boolean().optional().default(false)
 });
 
 function EmailPasswordForm() {
@@ -43,7 +46,11 @@ function EmailPasswordForm() {
         const result = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({email: values.email, password: values.password})
+            body: new URLSearchParams({
+              email: values.email,
+              password: values.password,
+              rememberMe: "" + values.rememberMe
+            })
         }).catch(err => console.error(err));
 
         toast.promise(result, {
@@ -88,6 +95,25 @@ function EmailPasswordForm() {
                                 <Input id="password" type={"password"} placeholder="••••••••"  {...field} />
                             </FormControl>
                         </FormItem>
+                    )}
+                />
+                <FormField
+                    name="rememberMe"
+                    control={form.control}
+                    render={({field}) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Remember this device
+                          </FormLabel>
+                        </div>
+                      </FormItem>
                     )}
                 />
                 <Button type="submit" disabled={isLoading}>Submit</Button>
