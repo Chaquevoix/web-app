@@ -33,6 +33,10 @@ const emailPasswordFormSchema = z.object({
     rememberMe: z.boolean().optional().default(false)
 });
 
+function setSessionCookie(token: string, expiration: Date) {
+   document.cookie = `token=${token}; expires=${expiration.toUTCString()}`;
+}
+
 function EmailPasswordForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
@@ -51,19 +55,30 @@ function EmailPasswordForm() {
               password: values.password,
               rememberMe: "" + values.rememberMe
             })
-        }).catch(err => console.error(err));
+        })
+
+        result
+          .then(response => response.json())
+          .then((data) => {
+            setSessionCookie(data.token, new Date(data.expires))
+          })
 
         toast.promise(result, {
             loading: 'Loading...',
             success: (data) => {
-                setIsLoading(false);
+              setIsLoading(false);
 
-                router.push("/profile");
-                return `Welcome back!`;
+              router.push("/profile");
+              return `Welcome back!`;
             },
             error: (data) => {
-                setIsLoading(false);
-                return `Authentication error, make sure your credentials are correct.`;
+              setIsLoading(false);
+              // TODO: Error message does not show up
+              if (data.code == "INCORRECT_CREDENTIALS") {
+                return `Your credentials are incorrect. Make sure you did not make any mistakes.`;
+              }
+
+              return `Unexpected authentication error: (${data.code})`;
             },
         });
     }

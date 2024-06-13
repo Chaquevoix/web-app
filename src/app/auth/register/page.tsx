@@ -25,10 +25,6 @@ import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
 
-function setSessionCookie(token: string, expiration: Date) {
-   document.cookie = `token=${token}; expires=${expiration.toUTCString()}`;
-}
-
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, "You need at least 8 characters in your password"),
@@ -56,19 +52,14 @@ function EmailPasswordForm() {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({email: values.email, password: values.passwordConfirmation})
-        })
-        .then(response => response.json())
-        .then(data => {
-          setSessionCookie(data.token, new Date(data.expires))
-        })
-        .catch(err => console.error(err));
+        }).catch(err => console.error(err));
 
         toast.promise(result, {
             loading: 'Loading...',
             success: (data) => {
                 setIsLoading(false);
 
-                // router.push("/auth/check-email");
+                router.push("/auth/check-email");
                 return `Account created successfully!`;
             },
             error: (data) => {
