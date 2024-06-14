@@ -34,7 +34,7 @@ const emailPasswordFormSchema = z.object({
 });
 
 function setSessionCookie(token: string, expiration: Date) {
-   document.cookie = `token=${token}; expires=${expiration.toUTCString()}`;
+   document.cookie = `token=${token}; expires=${expiration.toUTCString()}; path=/`;
 }
 
 function EmailPasswordForm() {
