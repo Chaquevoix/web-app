@@ -25,7 +25,7 @@ import {useForm} from "react-hook-form"
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
-import { Checkbox } from "@/components/ui/checkbox";
+import {Checkbox} from "@/components/ui/checkbox";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
@@ -34,7 +34,7 @@ const emailPasswordFormSchema = z.object({
 });
 
 function setSessionCookie(token: string, expiration: Date) {
-   document.cookie = `token=${token}; expires=${expiration.toUTCString()}; path=/`;
+    document.cookie = `token=${token}; expires=${expiration.toUTCString()}; path=/`;
 }
 
 function EmailPasswordForm() {
@@ -47,38 +47,43 @@ function EmailPasswordForm() {
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
         setIsLoading(true);
 
-        const result = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
+        const response = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`, {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({
-              email: values.email,
-              password: values.password,
-              rememberMe: "" + values.rememberMe
+                email: values.email,
+                password: values.password,
+                rememberMe: "" + values.rememberMe
             })
         })
 
-        result
-          .then(response => response.json())
-          .then((data) => {
-            setSessionCookie(data.token, new Date(data.expires))
-          })
+        const result = response.then(response => {
+            if (!response.ok) {
+                return response.json().then(err => Promise.reject(err));
+            }
+            return response.json();
+        })
 
         toast.promise(result, {
             loading: 'Loading...',
             success: (data) => {
-              setIsLoading(false);
+                console.log(data)
+                setSessionCookie(data.token, new Date(data.expires))
 
-              router.push("/profile");
-              return `Welcome back!`;
+                setIsLoading(false);
+
+                router.push("/profile");
+                return `Welcome back!`;
             },
             error: (data) => {
-              setIsLoading(false);
-              // TODO: Error message does not show up
-              if (data.code == "INCORRECT_CREDENTIALS") {
-                return `Your credentials are incorrect. Make sure you did not make any mistakes.`;
-              }
+                setIsLoading(false);
 
-              return `Unexpected authentication error: (${data.code})`;
+                switch (data.code) {
+                    case "INCORRECT_CREDENTIALS":
+                        return `Your credentials are incorrect. Make sure you did not make any mistakes.`;
+                    default:
+                        return `Unexpected authentication error: (${data.code})`;
+                }
             },
         });
     }
@@ -116,19 +121,19 @@ function EmailPasswordForm() {
                     name="rememberMe"
                     control={form.control}
                     render={({field}) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>
-                            Remember this device
-                          </FormLabel>
-                        </div>
-                      </FormItem>
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                                <FormLabel>
+                                    Remember this device
+                                </FormLabel>
+                            </div>
+                        </FormItem>
                     )}
                 />
                 <Button type="submit" disabled={isLoading}>Submit</Button>

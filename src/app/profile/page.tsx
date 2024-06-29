@@ -10,7 +10,7 @@ export default async function Profile() {
     const cookieStore = cookies();
     const token = cookieStore.get('token');
 
-    if (!token) {
+    if (!token?.value) {
         redirect('/auth/login')
     }
 
@@ -23,7 +23,6 @@ export default async function Profile() {
     });
 
     let data: ProfileData = await response.json();
-    console.log(data)
 
     return (
         <main className={`${styles.page}`}>
