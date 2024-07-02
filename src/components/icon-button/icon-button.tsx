@@ -10,19 +10,32 @@ import {Button} from "@/components/ui/button";
 import {text} from "node:stream/consumers";
 
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     text?: String,
     icon?: React.ReactNode,
     iconPlacement?: "left" | "right",
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined
 }
 
-export default function IconButton(props: Props) {
+export default function IconButton({
+  text,
+  icon,
+  iconPlacement = "left",
+  variant = "default",
+  className,
+  ...props
+}: Props) {
     return (
-        <Button variant={props.variant}>
-            <div className={styles.button_icon}>
-                {props.iconPlacement == "left" && <span className={styles.icon_left}>{props.icon}</span>}<span>{props.text}</span>{props.iconPlacement == "right" && <span className={styles.icon_right}>{props.icon}</span>}
-            </div>
-        </Button>
+      <Button variant={variant} className={`${styles.icon_button} ${className || ''}`} {...props}>
+        <div className={styles.button_icon}>
+          {iconPlacement === "left" && icon && (
+            <span className={styles.icon_left}>{icon}</span>
+          )}
+          {text && <span>{text}</span>}
+          {iconPlacement === "right" && icon && (
+            <span className={styles.icon_right}>{icon}</span>
+          )}
+        </div>
+      </Button>
     );
 }
