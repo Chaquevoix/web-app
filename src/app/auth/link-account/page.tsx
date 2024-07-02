@@ -1,6 +1,11 @@
 "use client";
 
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import {
     Form,
     FormControl,
@@ -8,51 +13,87 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import CardComponent from "@/components/card/card";
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import styles from "./style.module.css";
-import {Separator} from "@/components/ui/separator"
-import React, {useState} from "react";
-import {MdNavigateNext} from "react-icons/md";
+import { Separator } from "@/components/ui/separator";
+import React, { useState } from "react";
+import { MdNavigateNext } from "react-icons/md";
 import Link from "next/link";
-import {z} from "zod"
-import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
-import {useRouter} from "next/navigation";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import IconButton from "@/components/icon-button/icon-button";
+import { toast } from "sonner";
 
 const emailPasswordFormSchema = z.object({
-    permanentCode: z.string().length(12, "The permanent code has a length of 12 characters."),
-    admissionCode: z.string().length(7, "The admission code has a length of 7 characters."),
+    permanentCode: z
+        .string()
+        .length(12, "The permanent code has a length of 12 characters."),
+    admissionCode: z
+        .string()
+        .length(7, "The admission code has a length of 7 characters."),
 });
+
+function getToken(): string {
+    const cookies = document.cookie.split(";");
+    const tokenCookie = cookies.find((cookie) =>
+        cookie.trim().startsWith("token="),
+    );
+    return tokenCookie ? tokenCookie.split("=")[1] + "==" : "";
+}
 
 function LinkAccountForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof emailPasswordFormSchema>>({
         resolver: zodResolver(emailPasswordFormSchema),
-    })
+    });
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
 
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
         setIsLoading(true);
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/account/link`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams({permanentCode: values.permanentCode, admissionCode: values.admissionCode})
-        })
-            .then(response => {
+        const token = getToken();
+
+        const response = fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/account/link`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({
+                    permanent_code: values.permanentCode,
+                    admission_code: values.admissionCode,
+                    token: token
+                }),
+            },
+        );
+
+        const result = response.then(async (response) => {
+            if (!response.ok) {
+                return response.json().then((err) => Promise.reject(err));
+            }
+            return Promise.resolve();
+        });
+
+        toast.promise(result, {
+            loading: "Loading...",
+            success: () => {
                 setIsLoading(false);
 
-                if (response.status == 200) {
-                    router.push("/profile");
-                }
-            })
-            .catch(err => console.error(err));
+                router.push("/profile");
+                return `Email confirmed successfully!`;
+            },
+            error: (data) => {
+                setIsLoading(false);
+                return `There was an error while trying to associate your account to the provided information. Please try again.`;
+            },
+        });
     }
 
     return (
@@ -61,12 +102,16 @@ function LinkAccountForm() {
                 <FormField
                     name="permanentCode"
                     control={form.control}
-                    render={({field}) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Permanent code</FormLabel>
-                            <FormMessage/>
+                            <FormMessage />
                             <FormControl>
-                                <Input id="permanentCode" placeholder="GRAB11010100" {...field} />
+                                <Input
+                                    id="permanentCode"
+                                    placeholder="GRAB11010100"
+                                    {...field}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
@@ -74,17 +119,23 @@ function LinkAccountForm() {
                 <FormField
                     name="admissionCode"
                     control={form.control}
-                    render={({field}) => (
+                    render={({ field }) => (
                         <FormItem>
                             <FormLabel>Admission code</FormLabel>
-                            <FormMessage/>
+                            <FormMessage />
                             <FormControl>
-                                <Input id="admissionCode" placeholder="1234567"  {...field} />
+                                <Input
+                                    id="admissionCode"
+                                    placeholder="1234567"
+                                    {...field}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>Submit</Button>
+                <Button type="submit" disabled={isLoading}>
+                    Submit
+                </Button>
             </form>
         </Form>
     );
@@ -97,10 +148,14 @@ export default function LinkAccount() {
     return (
         <main className={`${styles.page} cool_background`}>
             <div className={styles.card}>
-                <CardComponent title={"Link your account"}
-                               description={"To use Chaquevoix, you need to link your account to your existing profile information."}>
+                <CardComponent
+                    title={"Link your account"}
+                    description={
+                        "To use Chaquevoix, you need to link your account to your existing profile information."
+                    }
+                >
                     <CardContent>
-                        <LinkAccountForm/>
+                        <LinkAccountForm />
                     </CardContent>
                 </CardComponent>
             </div>
