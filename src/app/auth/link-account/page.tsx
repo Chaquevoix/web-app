@@ -86,7 +86,7 @@ function LinkAccountForm() {
             success: () => {
                 setIsLoading(false);
 
-                router.push("/profile");
+                router.replace("/profile");
                 return `Email confirmed successfully!`;
             },
             error: (data) => {
