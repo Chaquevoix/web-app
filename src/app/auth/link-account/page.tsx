@@ -31,12 +31,11 @@ import IconButton from "@/components/icon-button/icon-button";
 import { toast } from "sonner";
 
 const emailPasswordFormSchema = z.object({
-    permanentCode: z
-        .string()
-        .length(12, "The permanent code has a length of 12 characters."),
-    admissionCode: z
-        .string()
-        .length(7, "The admission code has a length of 7 characters."),
+    firstName: z.string(),
+    lastName: z.string(),
+    dateOfBirth: z.string().date(),
+    permanentCode: z.string(),
+    admissionCode: z.string()
 });
 
 function getToken(): string {
@@ -67,6 +66,9 @@ function LinkAccountForm() {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
                 body: new URLSearchParams({
+                    first_name: values.firstName,
+                    last_name: values.lastName,
+                    date_of_birth: values.dateOfBirth,
                     permanent_code: values.permanentCode,
                     admission_code: values.admissionCode,
                     token: token
@@ -99,6 +101,58 @@ function LinkAccountForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+                name="firstName"
+                control={form.control}
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>First name</FormLabel>
+                        <FormMessage />
+                        <FormControl>
+                            <Input
+                                id="firstName"
+                                placeholder="Bob"
+                                {...field}
+                            />
+                        </FormControl>
+                    </FormItem>
+                )}
+            />
+            <FormField
+                name="lastName"
+                control={form.control}
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Last name</FormLabel>
+                        <FormMessage />
+                        <FormControl>
+                            <Input
+                                id="lastName"
+                                placeholder="Gratton"
+                                {...field}
+                            />
+                        </FormControl>
+                    </FormItem>
+                )}
+            />
+            <FormField
+                name="dateOfBirth"
+                control={form.control}
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Date of birth</FormLabel>
+                        <FormMessage />
+                        <FormControl>
+                            <Input
+                                id="dateOfBirth"
+                                placeholder="1970-01-01"
+                                type="date"
+                                {...field}
+                            />
+                        </FormControl>
+                    </FormItem>
+                )}
+            />
                 <FormField
                     name="permanentCode"
                     control={form.control}
