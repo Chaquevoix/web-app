@@ -139,7 +139,7 @@ function EmailPasswordForm() {
                                 <Input
                                     id="password"
                                     type={"password"}
-                                    placeholder={t("email_hint")}
+                                    placeholder={t("password_hint")}
                                     {...field}
                                 />
                             </FormControl>
