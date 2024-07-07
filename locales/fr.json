@@ -1,0 +1,27 @@
+{
+  "Global": {
+
+  },
+  "Home": {
+    "text": "Bonjour monde!"
+  },
+  "Login": {
+    "title_card_login_password" : "Connexion",
+    "subtitle_card_login_password" : "Connectez vous avec un courriel et un mot de passe",
+    "title_card_passkey" : "Clé d'accès",
+    "subtitle_card_login_passwordless" : "Connectez vous avec une clé d'accès",
+    "label_email" : "Courriel",
+    "label_password" : "Mot de passe",
+    "label_remember_device": "Se souvenir de cet appareil",
+    "email_hint" : "bob@courriel.com",
+    "password_hint" : "••••••••",
+    "label_login_button" : "Connexion",
+    "login_success": "Content de vous revoir!",
+    "errors": {
+      "password_min_characters": "Votre mot de passe doit contenir au moins 8 caractères.",
+      "password_max_length": "Pour éviter les abus, votre mot de passe ne peut pas contenir plus de 1024 caractères.",
+      "INCORRECT_CREDENTIALS": "Il y a une erreur dans votre mot de passe ou votre courriel. Veuillez vous assurer de ne pas avoir fait d'erreurs.",
+      "UNEXPECTED_ERROR": "Il y a eu une erreur innatendue: ({error})"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "Global": {
+
+  },
+  "Home": {
+    "text": "Hello world!"
+  },
+  "Login": {
+    "title_card_login_password" : "Log in",
+    "subtitle_card_login_password" : "Log in using an email and a password",
+    "title_card_passkey" : "Passkey",
+    "subtitle_card_login_passwordless" : "Log in using a Passkey",
+    "label_email" : "Email",
+    "label_password" : "Password",
+    "label_remember_device": "Remember this device",
+    "email_hint" : "bob@email.com",
+    "password_hint" : "••••••••",
+    "label_login_button" : "Log in",
+    "login_success": "Welcome back!",
+    "errors": {
+      "password_min_characters": "Your password must contain at least 8 characters..",
+      "password_max_length": "To prevent abuse, your password must not contain more than 1024 characters.",
+      "INCORRECT_CREDENTIALS": "Your credentials are incorrect. Make sure you did not make any mistakes.",
+      "UNEXPECTED_ERROR": "Unexpected authentication error: ({error})"
+    }
+  }
+}

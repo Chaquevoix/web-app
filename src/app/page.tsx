@@ -1,7 +1,6 @@
+import { useTranslations } from "next-intl";
+
 export default function Home() {
-  return (
-    <main>
-      welcome to chaque voix!!!!!!!!!
-    </main>
-  );
+    const t = useTranslations("Home");
+    return <main>{t("text")}</main>;
 }
