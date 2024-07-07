@@ -200,34 +200,18 @@ export default function Login() {
     return (
         <main className={`${styles.page} cool_background`}>
             <div className={styles.card}>
-                <CardComponent title={t("title_card_login_password")} description={t("subtitle_card_login_password")}>
+                <CardComponent title={t("title_card_login_password")}>
                     <CardContent>
                         <EmailPasswordForm />
                     </CardContent>
                     <Separator />
-                    <CardHeader>
-                        <CardTitle>{t('title_card_login_password')}</CardTitle>
-                        <CardDescription>
-                            {t("subtitle_card_login_passwordless")}
-                        </CardDescription>
-                    </CardHeader>
+                    <br/>
                     <CardContent>
-                        <div className={styles.form_row}>
-                            <Label htmlFor="email">{t("label_email")}</Label>
-                            <Input
-                                id="email"
-                                type={"email"}
-                                placeholder={t("email_hint")}
-                            />
-                        </div>
-                        <div className={styles.form_row}>
-                            <Link href={"/auth/check-email"}>
-                                <Button type="submit">
-                                    {t("label_login_button")}
-                                </Button>
-                            </Link>
-                        </div>
+                        <Button variant="outline">
+                            <GoPasskeyFill style={{ marginLeft: '0px', marginRight: '6px', fontSize: '120%' }} />{t('label_passkey_button')}
+                        </Button>
                     </CardContent>
+
                 </CardComponent>
             </div>
         </main>

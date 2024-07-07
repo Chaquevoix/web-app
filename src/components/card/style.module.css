@@ -4,6 +4,10 @@
     border-radius: calc(var(--radius) + 16px);
 }
 
+.card Button:not([role="checkbox"]) {
+  width: 100%;
+}
+
 @media only screen and (max-width: calc(450px + 10vw)) {
     .card {
         width: 90vw;

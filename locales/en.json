@@ -10,6 +10,7 @@
     "subtitle_card_login_password" : "Log in using an email and a password",
     "title_card_passkey" : "Passkey",
     "subtitle_card_login_passwordless" : "Log in using a Passkey",
+    "label_passkey_button" : "Log in with a Passkey",
     "label_email" : "Email",
     "label_password" : "Password",
     "label_remember_device": "Remember this device",

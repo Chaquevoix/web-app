@@ -10,6 +10,7 @@
     "subtitle_card_login_password" : "Connectez vous avec un courriel et un mot de passe",
     "title_card_passkey" : "Clé d'accès",
     "subtitle_card_login_passwordless" : "Connectez vous avec une clé d'accès",
+    "label_passkey_button" : "Connexion avec une clé d'accès",
     "label_email" : "Courriel",
     "label_password" : "Mot de passe",
     "label_remember_device": "Se souvenir de cet appareil",
