@@ -31,11 +31,11 @@ import IconButton from "@/components/icon-button/icon-button";
 import { toast } from "sonner";
 
 const emailPasswordFormSchema = z.object({
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
+    lastName: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
     dateOfBirth: z.string().date(),
-    permanentCode: z.string(),
-    admissionCode: z.string()
+    permanentCode: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
+    admissionCode: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
 });
 
 function getToken(): string {

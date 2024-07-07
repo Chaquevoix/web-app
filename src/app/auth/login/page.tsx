@@ -29,8 +29,11 @@ import {Checkbox} from "@/components/ui/checkbox";
 
 const emailPasswordFormSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(8, "You need at least 8 characters in your password"),
-    rememberMe: z.boolean().optional().default(false)
+    password: z
+        .string()
+        .min(8, "You need at least 8 characters in your password")
+        .max(1024, "To prevent abuse, your password must not contain more than 1024 characters."),
+    rememberMe: z.boolean().optional().default(false),
 });
 
 function setSessionCookie(token: string, expiration: Date) {

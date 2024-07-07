@@ -35,7 +35,8 @@ const emailPasswordFormSchema = z
         email: z.string().email(),
         password: z
             .string()
-            .min(8, "You need at least 8 characters in your password"),
+            .min(8, "You need at least 8 characters in your password")
+            .max(1024, "To prevent abuse, your password must not contain more than 1024 characters."),
         passwordConfirmation: z
             .string()
             .min(8, "You need at least 8 characters in your password"),

@@ -35,7 +35,7 @@ function setSessionCookie(token: string, expiration: Date) {
 }
 
 const passwordlessFormSchema = z.object({
-    token: z.string(),
+    token: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
 });
 
 function PasswordlessForm() {
