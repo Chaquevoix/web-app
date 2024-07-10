@@ -122,6 +122,7 @@ function EmailPasswordForm() {
                                 <Input
                                     id="email"
                                     placeholder={t("email_hint")}
+                                    autoComplete="email"
                                     {...field}
                                 />
                             </FormControl>
@@ -140,6 +141,7 @@ function EmailPasswordForm() {
                                     id="password"
                                     type={"password"}
                                     placeholder={t("password_hint")}
+                                    autoComplete="current-password"
                                     {...field}
                                 />
                             </FormControl>

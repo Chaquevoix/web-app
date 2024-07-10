@@ -104,6 +104,7 @@ function EmailPasswordForm() {
                                 <Input
                                     id="email"
                                     placeholder="bob@courriel.com"
+                                    autoComplete="email"
                                     {...field}
                                 />
                             </FormControl>
@@ -122,6 +123,7 @@ function EmailPasswordForm() {
                                     id="password"
                                     type={"password"}
                                     placeholder="••••••••"
+                                    autoComplete="new-password"
                                     {...field}
                                 />
                             </FormControl>
@@ -140,6 +142,7 @@ function EmailPasswordForm() {
                                     id="passwordConfirmation"
                                     type={"password"}
                                     placeholder="••••••••"
+                                    autoComplete="new-password"
                                     {...field}
                                 />
                             </FormControl>
@@ -207,6 +210,7 @@ function PasswordlessForm() {
                                 <Input
                                     id="email"
                                     placeholder="bob@courriel.com"
+                                    autoComplete="email"
                                     {...field}
                                 />
                             </FormControl>
