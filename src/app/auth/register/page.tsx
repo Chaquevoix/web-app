@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
+import { startRegistration, startAuthentication } from '@simplewebauthn/browser';
 
 const emailPasswordFormSchema = z
     .object({
@@ -157,6 +158,35 @@ function EmailPasswordForm() {
     );
 }
 
+async function registerPasskey() {
+  try {
+    const response = await fetch('/api/auth/webauthn/challenge', {
+      method: 'GET',
+    });
+    const options = await response.json();
+
+    const regResult = await startRegistration(options);
+
+    const verificationResponse = await fetch('/api/auth/webauthn/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(regResult),
+    });
+
+    const verificationResult = await verificationResponse.json();
+
+    if (verificationResult.verified) {
+      console.log('Passkey registered successfully');
+    } else {
+      console.error('Passkey registration failed');
+    }
+  } catch (error) {
+    console.error('Error during passkey registration:', error);
+  }
+}
+
 const passwordlessFormSchema = z.object({
     email: z.string().email(),
 });
@@ -169,31 +199,32 @@ function PasswordlessForm() {
     const [isLoading, setIsLoading] = useState(false);
 
     function onSubmit(values: z.infer<typeof passwordlessFormSchema>) {
-        setIsLoading(true);
-        const result = fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/passwordless`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: new URLSearchParams({ email: values.email }),
-            },
-        ).catch((err) => console.error(err));
+        registerPasskey()
+        // setIsLoading(true);
+        // const result = fetch(
+        //     `${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/passwordless`,
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/x-www-form-urlencoded",
+        //         },
+        //         body: new URLSearchParams({ email: values.email }),
+        //     },
+        // ).catch((err) => console.error(err));
 
-        toast.promise(result, {
-            loading: "Loading...",
-            success: (data) => {
-                setIsLoading(false);
+        // toast.promise(result, {
+        //     loading: "Loading...",
+        //     success: (data) => {
+        //         setIsLoading(false);
 
-                router.push("/auth/check-email");
-                return `Account created successfully!`;
-            },
-            error: (data) => {
-                setIsLoading(false);
-                return `Account creation error. Make sure your email is not already registered.`;
-            },
-        });
+        //         router.push("/auth/check-email");
+        //         return `Account created successfully!`;
+        //     },
+        //     error: (data) => {
+        //         setIsLoading(false);
+        //         return `Account creation error. Make sure your email is not already registered.`;
+        //     },
+        // });
     }
 
     return (
