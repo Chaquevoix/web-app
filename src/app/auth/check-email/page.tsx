@@ -51,9 +51,9 @@ function PasswordlessForm() {
         const response = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/email/validate`,             {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                "Content-Type": "application/json",
             },
-            body: new URLSearchParams({ token: values.token }),
+            body: JSON.stringify({ "code" : values.token }),
         })
 
         const result = response.then(response => {

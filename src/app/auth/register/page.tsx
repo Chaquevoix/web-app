@@ -29,7 +29,10 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import IconButton from "@/components/icon-button/icon-button";
-import { startRegistration, startAuthentication } from '@simplewebauthn/browser';
+import {
+    startRegistration,
+    startAuthentication,
+} from "@simplewebauthn/browser";
 
 const emailPasswordFormSchema = z
     .object({
@@ -37,7 +40,10 @@ const emailPasswordFormSchema = z
         password: z
             .string()
             .min(8, "You need at least 8 characters in your password")
-            .max(1024, "To prevent abuse, your password must not contain more than 1024 characters."),
+            .max(
+                1024,
+                "To prevent abuse, your password must not contain more than 1024 characters.",
+            ),
         passwordConfirmation: z
             .string()
             .min(8, "You need at least 8 characters in your password"),
@@ -63,15 +69,15 @@ function EmailPasswordForm() {
     async function onSubmit(values: z.infer<typeof emailPasswordFormSchema>) {
         setIsLoading(true);
         const result = fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/email`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/register/email_password`,
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                 },
-                body: new URLSearchParams({
+                body: JSON.stringify({
                     email: values.email,
-                    password: values.passwordConfirmation,
+                    password: values.password,
                 }),
             },
         ).catch((err) => console.error(err));
@@ -159,32 +165,35 @@ function EmailPasswordForm() {
 }
 
 async function registerPasskey() {
-  try {
-    const response = await fetch('/api/auth/webauthn/challenge', {
-      method: 'GET',
-    });
-    const options = await response.json();
+    try {
+        const response = await fetch("/api/auth/webauthn/challenge", {
+            method: "GET",
+        });
+        const options = await response.json();
 
-    const regResult = await startRegistration(options);
+        const regResult = await startRegistration(options);
 
-    const verificationResponse = await fetch('/api/auth/webauthn/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(regResult),
-    });
+        const verificationResponse = await fetch(
+            "/api/auth/webauthn/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(regResult),
+            },
+        );
 
-    const verificationResult = await verificationResponse.json();
+        const verificationResult = await verificationResponse.json();
 
-    if (verificationResult.verified) {
-      console.log('Passkey registered successfully');
-    } else {
-      console.error('Passkey registration failed');
+        if (verificationResult.verified) {
+            console.log("Passkey registered successfully");
+        } else {
+            console.error("Passkey registration failed");
+        }
+    } catch (error) {
+        console.error("Error during passkey registration:", error);
     }
-  } catch (error) {
-    console.error('Error during passkey registration:', error);
-  }
 }
 
 const passwordlessFormSchema = z.object({
@@ -199,7 +208,7 @@ function PasswordlessForm() {
     const [isLoading, setIsLoading] = useState(false);
 
     function onSubmit(values: z.infer<typeof passwordlessFormSchema>) {
-        registerPasskey()
+        registerPasskey();
         // setIsLoading(true);
         // const result = fetch(
         //     `${process.env.NEXT_PUBLIC_API_URL}/auth/account/register/passwordless`,

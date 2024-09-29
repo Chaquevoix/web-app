@@ -60,16 +60,16 @@ function EmailPasswordForm() {
         setIsLoading(true);
 
         const response = fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/account/login/email`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/login/email_password`,
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                 },
-                body: new URLSearchParams({
+                body: JSON.stringify({
                     email: values.email,
                     password: values.password,
-                    rememberMe: "" + values.rememberMe,
+                    rememberMe: values.rememberMe,
                 }),
             },
         );

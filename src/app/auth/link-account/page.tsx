@@ -59,20 +59,20 @@ function LinkAccountForm() {
         const token = getToken();
 
         const response = fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/account/link`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/link`,
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                 },
-                body: new URLSearchParams({
+                body: JSON.stringify({
                     first_name: values.firstName,
                     last_name: values.lastName,
                     date_of_birth: values.dateOfBirth,
                     permanent_code: values.permanentCode,
                     admission_code: values.admissionCode,
                     token: token
-                }),
+                })
             },
         );
 
@@ -88,7 +88,7 @@ function LinkAccountForm() {
             success: () => {
                 setIsLoading(false);
 
-                router.replace("/profile");
+                // router.replace("/profile");
                 return `Email confirmed successfully!`;
             },
             error: (data) => {
