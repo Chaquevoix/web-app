@@ -2,28 +2,20 @@
 
 import {
     CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import CardComponent from "@/components/card/card";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import styles from "./style.module.css";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
-import { MdNavigateNext } from "react-icons/md";
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,6 +25,7 @@ import IconButton from "@/components/icon-button/icon-button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
 import { GoPasskeyFill } from "react-icons/go";
+import Button from "@/components/button/button";
 
 function setSessionCookie(token: string, expiration: Date) {
     document.cookie = `token=${token}; expires=${expiration.toUTCString()}; path=/`;
@@ -167,9 +160,11 @@ function EmailPasswordForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>
-                    {t("label_login_button")}
-                </Button>
+                <Button
+                    disabled={isLoading}
+                    type="submit"
+                    text={t("label_login_button")}
+                />
             </form>
         </Form>
     );
@@ -209,9 +204,12 @@ export default function Login() {
                     <Separator />
                     <br/>
                     <CardContent>
-                        <Button variant="outline">
-                            <GoPasskeyFill style={{ marginLeft: '0px', marginRight: '6px', fontSize: '120%' }} />{t('label_passkey_button')}
-                        </Button>
+                        <IconButton
+                            variant="outline"
+                            text={t('label_passkey_button')}
+                            icon={<GoPasskeyFill style={{ marginLeft: '0px', marginRight: '8px', fontSize: '90%' }} />}
+                            iconPlacement={"left"}
+                        />
                     </CardContent>
 
                 </CardComponent>

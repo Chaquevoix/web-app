@@ -17,7 +17,6 @@ import {
 import CardComponent from "@/components/card/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import styles from "./style.module.css";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
@@ -29,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import IconButton from "@/components/icon-button/icon-button";
 import { toast } from "sonner";
+import Button from "@/components/button/button";
 
 const emailPasswordFormSchema = z.object({
     firstName: z.string().max(1024, "To prevent abuse, this field can not not contain more than 1024 characters."),
@@ -187,9 +187,11 @@ function LinkAccountForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>
-                    Submit
-                </Button>
+                <Button
+                    disabled={isLoading}
+                    type="submit"
+                    text={"Submit"}
+                />
             </form>
         </Form>
     );

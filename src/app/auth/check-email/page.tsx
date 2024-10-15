@@ -2,9 +2,6 @@
 
 import {
     CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 import {
     Form,
@@ -15,14 +12,10 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import CardComponent from "@/components/card/card";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import styles from "./style.module.css";
-import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

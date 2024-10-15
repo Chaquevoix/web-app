@@ -17,7 +17,6 @@ import {
 import CardComponent from "@/components/card/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import styles from "./style.module.css";
 import { Separator } from "@/components/ui/separator";
 import React, { useState } from "react";
@@ -33,6 +32,7 @@ import {
     startRegistration,
     startAuthentication,
 } from "@simplewebauthn/browser";
+import Button from "@/components/button/button";
 
 const emailPasswordFormSchema = z
     .object({
@@ -156,9 +156,11 @@ function EmailPasswordForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>
-                    Submit
-                </Button>
+                <Button
+                    disabled={isLoading}
+                    type="submit"
+                    text={"Submit"}
+                />
             </form>
         </Form>
     );
