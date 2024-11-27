@@ -44,7 +44,7 @@ export default function ProfileForm(props: Props) {
                             <FormMessage/>
                             <FormControl>
                                 <Input id="email" placeholder="bob@courriel.com" {...field}
-                                       defaultValue={props.data.email}/>
+                                       defaultValue={props.data.Email}/>
                             </FormControl>
                         </FormItem>
                     )}

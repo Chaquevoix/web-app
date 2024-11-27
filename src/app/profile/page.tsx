@@ -14,20 +14,28 @@ export default async function Profile() {
         redirect('/auth/login')
     }
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": token?.value,
-        }
-    });
+    // TODO: if the URL has no params, default to the current user (display own profile)
+    // TODO: when there is a url param after /profile/ fetch it to the backend
+
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/me`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": token?.value,
+            }
+        },
+    );
 
     let data: ProfileData = await response.json();
+
+    console.log(data)
 
     return (
         <main className={`${styles.page}`}>
             <div className={styles.card}>
-                <h1>Hello {data.firstName}!</h1>
+                <h1>Hello {data.FirstName}!</h1>
                 <h2>Welcome back.</h2>
                 <CardComponent title={"Account information"} description={""}>
                     <CardContent>
