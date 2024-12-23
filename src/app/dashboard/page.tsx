@@ -35,7 +35,7 @@ export default async function Profile() {
     return (
         <main className={`${styles.page}`}>
             <h1>DASHBORD</h1>
-            <div>{ data}</div>
+            <div>{ data.toString()}</div>
         </main>
     );
 }
