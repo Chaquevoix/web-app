@@ -1,14 +1,42 @@
-.form_row:not(:nth-of-type(1)) {
-    margin-top: 20px;
+.cards_list {
+    display: grid;
+    place-content: center;
+    margin: auto;
+    grid-gap: 12px;
+    grid-template-columns: repeat(auto-fill, 450px);
+    width: 80vw;
 }
 
-.card {
-    margin-left: auto;
-    margin-right: auto;
+.course_entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1.5rem;
+    padding-block: 12px;
+}
+
+.course_entry_text {
+    flex: 1;
+}
+
+.course_entry_button {
+    display: flex;
+    align-items: center;
+}
+
+.icon_right {
+    font-size: 150%;
+    margin-bottom: -2px;
+    margin-right: -8px;
+    margin-left: 2px;
 }
 
 .page {
-    display: flex;
-    justify-content: center;
     align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .groups_list {
+        grid-template-columns: auto;
+    }
 }

@@ -2,6 +2,7 @@
     width: 450px;
     margin-block: 5vw;
     border-radius: calc(var(--radius) + 16px);
+    margin-block: 0;
 }
 
 .card Button:not([role="checkbox"]) {
