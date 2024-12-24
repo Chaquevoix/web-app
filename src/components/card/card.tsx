@@ -18,8 +18,8 @@ export default function CardComponent(props: Props) {
     return (
         <Card className={styles.card}>
             <CardHeader>
-                <CardTitle>{props.title}</CardTitle>
-                <CardDescription>{props.description}</CardDescription>
+                {props.title ? <CardTitle>{props.title}</CardTitle> : ""}
+                {props.description ? <CardDescription>{props.description}</CardDescription> : ""}
             </CardHeader>
             <div>
                 {props.children}
