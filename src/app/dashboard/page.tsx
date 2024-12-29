@@ -12,60 +12,9 @@ import IconButton from "@/components/icon-button/icon-button";
 import { MdNavigateNext } from "react-icons/md";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/shadButton";
+import GroupListItem from "./GroupsList";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
 
-
-interface GroupsResponse {
-    GroupID: UUID
-    GroupNumber: number,
-    TeacherFirstName: string,
-    TeacherLastName: string,
-    CourseCode: string,
-    CourseName: string
-}
-
-type GroupListItemsProps = { token: string }
-async function GroupListItem(props: GroupListItemsProps) {
-    // const t = useTranslations("Login");
-
-    // TODO: if the URL has no params, default to the current user (display own profile)
-    // TODO: when there is a url param after /profile/ fetch it to the backend
-
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/groups`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": props.token,
-            }
-        },
-    );
-
-    let data: GroupsResponse[] = await response.json();
-
-    return (
-        <div>
-            {data.map(group => (
-                <div key={group.GroupID} >
-                    <Separator/>
-                    <div className={styles.course_entry}>
-                        <div className={styles.course_entry_text}>
-                            <h2 className={styles.course_name}>{group.CourseName}</h2>
-                            <CardDescription>{group.CourseCode} - Group {group.GroupNumber}</CardDescription>
-                            <CardDescription>{group.TeacherFirstName} {group.TeacherLastName}</CardDescription>
-                        </div>
-                        <div className={styles.course_entry_button}>
-                            <Link href={`/dashboard/group/${group.GroupID}`} className={buttonVariants({ variant: "link" })}>
-                                <span>Go</span>
-                                <span className={styles.icon_right}><MdNavigateNext /></span>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
-}
 
 export default async function Profile() {
     // const t = useTranslations("Login");
