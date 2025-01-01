@@ -1,0 +1,32 @@
+.sonner_loading_wrapper {
+  --size: 16px;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+.sonner_loading_wrapper[data-visible='false'] {
+  transform-origin: center;
+  animation: sonner-fade-out 0.2s ease forwards;
+}
+
+.sonner_spinner {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  height: 16px;
+  width: 16px;
+}
+
+.sonner_loading_bar {
+  animation: sonner-spin 1.2s linear infinite;
+  background: red;
+  border-radius: 6px;
+  height: 8%;
+  left: -10%;
+  position: absolute;
+  top: -3.9%;
+  width: 24%;
+}

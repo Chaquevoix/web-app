@@ -14,7 +14,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/shadButton";
 import GroupListItem from "./GroupsList";
 import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
-
+import {Spinner} from "@nextui-org/spinner";
 
 export default async function Profile() {
     // const t = useTranslations("Login");
@@ -32,9 +32,13 @@ export default async function Profile() {
         <main className={`${styles.page}`}>
             <h1>DASHBORD</h1>
 
+            <div >
+                <LoadingSpinner />
+            </div>
+
             <div className={styles.cards_list}>
                 <CardComponent title="Courses">
-                    <Suspense fallback={<a>loading</a>}>
+                    <Suspense fallback={<Spinner/>}>
                         <GroupListItem token={ token?.value } />
                     </Suspense>
                 </CardComponent>
