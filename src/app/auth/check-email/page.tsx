@@ -61,7 +61,7 @@ function PasswordlessForm() {
             success: (data) => {
                 setIsLoading(false);
 
-                setSessionCookie(data.token, new Date(data.expires))
+                setSessionCookie(data.Token, new Date(data.expires))
 
                 router.push("/auth/link-account");
                 return `Email confirmed successfully!`;

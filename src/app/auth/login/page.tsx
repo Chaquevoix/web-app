@@ -79,7 +79,7 @@ function EmailPasswordForm() {
             loading: t(''),
             success: (data) => {
                 console.log(data);
-                setSessionCookie(data.token, new Date(data.expires));
+                setSessionCookie(data.Token, new Date(data.expires));
 
                 setIsLoading(false);
 
