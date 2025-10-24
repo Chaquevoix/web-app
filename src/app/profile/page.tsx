@@ -5,6 +5,8 @@ import React from "react";
 import styles from "./style.module.css";
 import ProfileForm from "@/app/profile/form";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import Button from "@/components/button/button";
 
 export default async function Profile() {
     const cookieStore = cookies();
@@ -40,6 +42,22 @@ export default async function Profile() {
                 <CardComponent title={"Account information"} description={""}>
                     <CardContent>
                         <ProfileForm data={data}/>
+                    </CardContent>
+                </CardComponent>
+                
+                <CardComponent title={"Security"} description={"Manage your authentication methods"}>
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div>
+                                <h3 className="font-semibold mb-2">Passkeys</h3>
+                                <p className="text-sm text-muted-foreground mb-4">
+                                    Use passkeys for secure, passwordless authentication
+                                </p>
+                                <Link href="/profile/passkeys">
+                                    <Button text="Manage Passkeys" variant="outline" />
+                                </Link>
+                            </div>
+                        </div>
                     </CardContent>
                 </CardComponent>
             </div>
