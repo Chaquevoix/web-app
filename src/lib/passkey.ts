@@ -1,10 +1,4 @@
-import { startRegistration, startAuthentication } from "@simplewebauthn/browser";
-import type {
-  PublicKeyCredentialCreationOptionsJSON,
-  PublicKeyCredentialRequestOptionsJSON,
-  RegistrationResponseJSON,
-  AuthenticationResponseJSON
-} from "@simplewebauthn/types";
+import { startRegistration, startAuthentication, PublicKeyCredentialCreationOptionsJSON, RegistrationResponseJSON, PublicKeyCredentialRequestOptionsJSON, AuthenticationResponseJSON } from "@simplewebauthn/browser";
 import { UUID } from "crypto";
 
 export interface PasskeyRegistrationOptions {
@@ -32,7 +26,7 @@ export async function registerPasskey(options: PasskeyRegistrationOptions) {
 
   const registrationOptions: PublicKeyCredentialCreationOptionsJSON = await response.json();
 
-  const attResp: RegistrationResponseJSON = await startRegistration(registrationOptions);
+  const attResp: RegistrationResponseJSON = await startRegistration({ optionsJSON: registrationOptions });
 
   const verificationResponse = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/registerFinish`,
@@ -67,7 +61,7 @@ export async function authenticateWithPasskey(options?: PasskeyAuthenticationOpt
 
   const authenticationOptions: PublicKeyCredentialRequestOptionsJSON = await response.json();
 
-  const authResp: AuthenticationResponseJSON = await startAuthentication(authenticationOptions);
+  const authResp: AuthenticationResponseJSON = await startAuthentication({ optionsJSON: authenticationOptions });
 
   const verificationResponse = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/loginFinish`,
