@@ -44,22 +44,7 @@ export default async function Profile() {
                         <ProfileForm data={data}/>
                     </CardContent>
                 </CardComponent>
-                
-                <CardComponent title={"Security"} description={"Manage your authentication methods"}>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="font-semibold mb-2">Passkeys</h3>
-                                <p className="text-sm text-muted-foreground mb-4">
-                                    Use passkeys for secure, passwordless authentication
-                                </p>
-                                <Link href="/profile/passkeys">
-                                    <Button text="Manage Passkeys" variant="outline" />
-                                </Link>
-                            </div>
-                        </div>
-                    </CardContent>
-                </CardComponent>
+
             </div>
         </main>
     );

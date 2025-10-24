@@ -18,6 +18,7 @@ export default function HeaderBar() {
             <Link href={'/'}>Chaquevoix</Link>
             <Link href={'/auth/register'}>Register</Link>
             <Link href={'/auth/login'}>Login</Link>
+            <Link href={'/settings/passkeys'}>Passkeys</Link>
 
             <NavigationMenu>
                 <NavigationMenuList>
