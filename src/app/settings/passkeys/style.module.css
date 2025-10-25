@@ -1,9 +1,3 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
 .addSection {
     display: flex;
     flex-direction: column;
@@ -21,16 +15,7 @@
     color: var(--muted-foreground);
 }
 
-.listSection {
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-}
 
-.listSection h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
 
 .emptyState {
     text-align: center;
@@ -118,17 +103,6 @@
 .lastUsed svg {
     height: 12px;
     width: 12px;
-}
-
-.infoSection {
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-}
-
-.infoSection h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 12px;
 }
 
 .infoSection p {
