@@ -13,7 +13,7 @@ import {text} from "node:stream/consumers";
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     text?: String,
     icon?: React.ReactNode,
-    iconPlacement?: "left" | "right",
+    iconPlacement?: "left" | "right" | "center",
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined
 }
 
@@ -34,6 +34,9 @@ export default function IconButton({
           {text && <span>{text}</span>}
           {iconPlacement === "right" && icon && (
             <span className={styles.icon_right}>{icon}</span>
+          )}
+          {iconPlacement === "center" && icon && (
+            <span className={styles.icon_center}>{icon}</span>
           )}
         </div>
       </ShadButton>

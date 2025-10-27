@@ -31,31 +31,25 @@ export default function PasskeyList({ passkeys }: PasskeyListProps) {
   };
 
   return (
-    <div className={styles.passkeyList}>
+    <div>
       {passkeys.map((passkey) => (
-        <div key={passkey.ID} className={styles.passkeyItem}>
-          <div className={styles.passkeyInfo}>
-            <div className={styles.passkeyIconWrapper}>
-              <FiKey className={styles.passkeyIcon} />
+          <div key={passkey.ID} className={styles.passkey_list_item}>
+            <div className={styles.titre_passkey_grid}>
+                <b className={styles.titre_passkey}>{passkey.Nickname}</b>
+                <IconButton
+                  iconPlacement="center"
+                  className={styles.bouton_supprimer}
+                  icon={<FiTrash2 />}
+                  variant={"destructive"}
+                />
             </div>
-            <div className={styles.passkeyDetails}>
-              <p className={styles.passkeyName}>{passkey.Nickname}</p>
-              <div className={styles.passkeyMeta}>
-                <span>Created {formatDate(passkey.CreatedAt)}</span>
-                {passkey.LastUsedAt && (
-                  <span className={styles.lastUsed}>
-                    <FiClock />
-                    Last used {formatDate(passkey.LastUsedAt)}
-                  </span>
-                )}
-              </div>
+            <div className={styles.details_passkey_grid}>
+              {passkey.LastUsedAt && (
+                <p>Last used: {formatDate(passkey.LastUsedAt)}</p>
+              )}
+              <p>Created at: {formatDate(passkey.CreatedAt)}</p>
             </div>
           </div>
-          <IconButton
-            icon={<FiTrash2 />}
-            variant={"destructive"}
-          />
-        </div>
       ))}
     </div>
   );

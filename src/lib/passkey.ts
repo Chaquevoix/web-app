@@ -14,7 +14,7 @@ export async function registerPasskey(options: PasskeyRegistrationOptions) {
   const { token, passkeyName } = options;
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/registerStart`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/register/start`,
     {
       method: "POST",
       headers: {
@@ -28,9 +28,16 @@ export async function registerPasskey(options: PasskeyRegistrationOptions) {
 
   const attResp: RegistrationResponseJSON = await startRegistration({ optionsJSON: registrationOptions });
 
-  const verificationResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/registerFinish`,
-    {
+  const finishUrl = new URL(
+    "/auth/passkey/register/finish",
+    process.env.NEXT_PUBLIC_API_URL
+  );
+
+  if (passkeyName) {
+    finishUrl.searchParams.append("name", passkeyName);
+  }
+
+  const verificationResponse = await fetch(finishUrl.toString(),{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +49,7 @@ export async function registerPasskey(options: PasskeyRegistrationOptions) {
 
   const verificationResult = await verificationResponse.json();
 
-  return verificationResult;
+  return verificationResponse.status;
 }
 
 export async function authenticateWithPasskey(options?: PasskeyAuthenticationOptions) {

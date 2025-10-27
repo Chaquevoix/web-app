@@ -7,7 +7,7 @@ import PasskeysForm from "@/app/settings/passkeys/form";
 import { redirect } from "next/navigation";
 import { listPasskeys } from "@/lib/passkey";
 import { Separator } from "@/components/ui/separator";
-import PasskeyList from "./PasskeyList";
+import PasskeyList from "./list";
 
 export default async function PasskeysPage() {
     const cookieStore = cookies();
@@ -22,9 +22,6 @@ export default async function PasskeysPage() {
     return (
         <main className={`${styles.page}`}>
             <div className={styles.card}>
-                <h1>Passkeys</h1>
-                <h2>Manage your passkeys for secure, passwordless authentication.</h2>
-
                 <CardComponent
                     title={"Add New Passkey"}
                     description={"Register a new passkey for this account"}

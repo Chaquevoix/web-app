@@ -1,123 +1,31 @@
-.addSection {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.inputGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.hint {
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-}
-
-
-
-.emptyState {
-    text-align: center;
-    padding: 32px 0;
-    color: var(--muted-foreground);
-}
-
-.emptyIcon {
-    margin: 0 auto 8px;
-    height: 48px;
-    width: 48px;
-    opacity: 0.2;
-}
-
-.emptyHint {
-    font-size: 0.875rem;
-}
-
-.passkeyList {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.passkeyItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: background-color 0.2s;
-}
-
-.passkeyItem:hover {
-    background-color: var(--accent);
-}
-
-.passkeyInfo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.passkeyIconWrapper {
-    padding: 8px;
-    background-color: var(--primary);
-    opacity: 0.1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.passkeyIcon {
-    height: 20px;
-    width: 20px;
-    color: var(--primary);
-}
-
-.passkeyDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.passkeyName {
-    font-weight: 500;
-}
-
-.passkeyMeta {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-}
-
-.lastUsed {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.lastUsed svg {
-    height: 12px;
-    width: 12px;
-}
-
-.infoSection p {
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
-}
-
 .page {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.card {
-    margin-left: auto;
-    margin-right: auto;
+.passkey_list_item {
+    margin-top: 16px;
+}
+
+.titre_passkey_grid {
+    display: grid;
+    grid-template-columns: auto 60px;
+}
+
+.titre_passkey {
+    padding-right: 12px;
+    max-width: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.details_passkey_grid {
+	color: hsl(var(--muted-foreground));
+}
+
+.bouton_supprimer {
+    font-size: 12px;
+    width: 32px !important;
+    height: 32px !important;
 }
