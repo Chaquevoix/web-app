@@ -5,7 +5,7 @@ import React from "react";
 import styles from "./style.module.css";
 import PasskeysForm from "@/app/settings/passkeys/form";
 import { redirect } from "next/navigation";
-import { listPasskeys } from "@/lib/passkey";
+import { Passkey, listPasskeys } from "@/lib/passkey";
 import { Separator } from "@/components/ui/separator";
 import PasskeyList from "./list";
 
@@ -17,7 +17,13 @@ export default async function PasskeysPage() {
         redirect('/auth/login')
     }
 
-    const passkeys = await listPasskeys(token.value);
+    let passkeys: Passkey[] = [];
+    try {
+      passkeys = await listPasskeys(token.value);
+    } catch (error) {
+      console.error(error);
+      passkeys = [];
+    }
 
     return (
         <main className={`${styles.page}`}>

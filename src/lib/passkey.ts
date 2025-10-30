@@ -54,24 +54,32 @@ export async function registerPasskey(options: PasskeyRegistrationOptions) {
 
 export async function authenticateWithPasskey(options?: PasskeyAuthenticationOptions) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/loginStart`,
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/login/start`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: options?.email
-      })
     }
   );
 
-  const authenticationOptions: PublicKeyCredentialRequestOptionsJSON = await response.json();
+  const responseData = await response.json();
+
+  const { session_id, ...authenticationOptions } = responseData;
 
   const authResp: AuthenticationResponseJSON = await startAuthentication({ optionsJSON: authenticationOptions });
+  console.log(authResp)
 
-  const verificationResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/passkey/loginFinish`,
+  const finishUrl = new URL(
+    "/auth/passkey/login/finish",
+    process.env.NEXT_PUBLIC_API_URL
+  );
+
+  if (session_id) {
+    finishUrl.searchParams.append("session_id", session_id);
+  }
+
+  const verificationResponse = await fetch(finishUrl.toString(),
     {
       method: "POST",
       headers: {

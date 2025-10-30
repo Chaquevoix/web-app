@@ -26,6 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslations } from "next-intl";
 import { GoPasskeyFill } from "react-icons/go";
 import Button from "@/components/button/button";
+import { authenticateWithPasskey } from "@/lib/passkey";
 
 function setSessionCookie(token: string, expiration: Date) {
     document.cookie = `token=${token}; expires=${expiration.toUTCString()}; path=/`;
@@ -170,25 +171,38 @@ function EmailPasswordForm() {
     );
 }
 
-const passkeysFormSchema = z.object({
-    email: z.string().email(),
-});
+function PasskeyLogin() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
-function PasskeyForm() {
-    const form = useForm<z.infer<typeof passkeysFormSchema>>({
-        resolver: zodResolver(passkeysFormSchema),
-    });
+    const handlePasskeyLogin = async () => {
+        setIsLoading(true);
+        try {
+            const result = await authenticateWithPasskey();
 
-    function onSubmit(values: z.infer<typeof passkeysFormSchema>) {
-        // fetch(`${process.env.API_URL}/auth/account/register/email`, {
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        //     body: new URLSearchParams({email: values.email})
-        // })
-        //     .then(response => response.json())
-        //     .then(response => console.log(response))
-        //     .catch(err => console.error(err));
-    }
+            if (result.Token && result.expires) {
+                setSessionCookie(result.Token, new Date(result.expires));
+                toast.success('Login successful');
+                router.push("/profile");
+            }
+        } catch (error: any) {
+          console.error(error)
+          toast.error(error.message || 'Passkey login failed');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <IconButton
+            variant="outline"
+            text="Login with Passkey"
+            icon={<GoPasskeyFill style={{ marginLeft: '0px', marginRight: '8px', fontSize: '90%' }} />}
+            iconPlacement={"left"}
+            onClick={handlePasskeyLogin}
+            disabled={isLoading}
+        />
+    );
 }
 
 export default function Login() {
@@ -204,12 +218,7 @@ export default function Login() {
                     <Separator />
                     <br/>
                     <CardContent>
-                        <IconButton
-                            variant="outline"
-                            text={t('label_passkey_button')}
-                            icon={<GoPasskeyFill style={{ marginLeft: '0px', marginRight: '8px', fontSize: '90%' }} />}
-                            iconPlacement={"left"}
-                        />
+                        <PasskeyLogin />
                     </CardContent>
 
                 </CardComponent>
